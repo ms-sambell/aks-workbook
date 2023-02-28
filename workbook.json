@@ -1,297 +1,1020 @@
 {
-    "version": "Notebook/1.0",
-    "items": [
-      {
-        "type": 1,
-        "content": {
-          "json": "[ Add Company Logo ]\r\n\r\n# Azure Kubernetes Service - Example\r\n\r\nThis dashboard provides insights into [ Customer ] Azure Kubernetes Environment. This workbook is an example to help show the capabilities for monitoring AKS in Azure.\r\n\r\n- [Azure Service Status](https://status.azure.com/en-us/status)"
-        },
-        "name": "workbookSummary"
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "[ Add Company Logo ]\r\n\r\n# Azure Kubernetes Service - Example\r\n\r\nThis dashboard provides insights into [ Customer ] Azure Kubernetes Environment. This workbook is an example to help show the capabilities for monitoring AKS in Azure. \r\n\r\n\r\n> To use this workbook you must have Container Insights enabled on your cluster.\r\n\r\n### Documentation\r\n\r\n- [Azure Service Status](https://status.azure.com/en-us/status)\r\n- [AKS Monitoring Guide](https://learn.microsoft.com/en-us/azure/aks/monitor-aks)\r\n- [Availability Testing](https://github.com/ms-sambell/app-insights-private-availability-tests)\r\n- [Container Insight Queries](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-log-query)\r\n- [AKS Troubleshooting Guide](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-troubleshoot)\r\n- [AKS Troubleshooting - error messages](https://learn.microsoft.com/en-us/troubleshoot/azure/azure-kubernetes/welcome-azure-kubernetes)"
       },
-      {
-        "type": 9,
-        "content": {
-          "version": "KqlParameterItem/1.0",
-          "crossComponentResources": [
-            "{Subscriptions}"
-          ],
-          "parameters": [
-            {
-              "id": "ee72d127-d97a-43a7-aece-1426d6affd22",
-              "version": "KqlParameterItem/1.0",
-              "name": "Timerange",
-              "type": 4,
-              "typeSettings": {
-                "selectableValues": [
-                  {
-                    "durationMs": 900000
-                  },
-                  {
-                    "durationMs": 1800000
-                  },
-                  {
-                    "durationMs": 3600000
-                  },
-                  {
-                    "durationMs": 14400000
-                  },
-                  {
-                    "durationMs": 43200000
-                  },
-                  {
-                    "durationMs": 86400000
-                  },
-                  {
-                    "durationMs": 172800000
-                  },
-                  {
-                    "durationMs": 259200000
-                  },
-                  {
-                    "durationMs": 604800000
-                  },
-                  {
-                    "durationMs": 1209600000
-                  },
-                  {
-                    "durationMs": 2419200000
-                  },
-                  {
-                    "durationMs": 2592000000
-                  },
-                  {
-                    "durationMs": 5184000000
-                  },
-                  {
-                    "durationMs": 7776000000
-                  }
-                ],
-                "allowCustom": true
-              },
-              "timeContext": {
-                "durationMs": 86400000
-              },
-              "value": {
-                "durationMs": 604800000
-              }
+      "name": "workbookSummary"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Subscriptions}"
+        ],
+        "parameters": [
+          {
+            "id": "ee72d127-d97a-43a7-aece-1426d6affd22",
+            "version": "KqlParameterItem/1.0",
+            "name": "Timerange",
+            "type": 4,
+            "typeSettings": {
+              "selectableValues": [
+                {
+                  "durationMs": 900000
+                },
+                {
+                  "durationMs": 1800000
+                },
+                {
+                  "durationMs": 3600000
+                },
+                {
+                  "durationMs": 14400000
+                },
+                {
+                  "durationMs": 43200000
+                },
+                {
+                  "durationMs": 86400000
+                },
+                {
+                  "durationMs": 172800000
+                },
+                {
+                  "durationMs": 259200000
+                },
+                {
+                  "durationMs": 604800000
+                },
+                {
+                  "durationMs": 1209600000
+                },
+                {
+                  "durationMs": 2419200000
+                },
+                {
+                  "durationMs": 2592000000
+                },
+                {
+                  "durationMs": 5184000000
+                },
+                {
+                  "durationMs": 7776000000
+                }
+              ],
+              "allowCustom": true
             },
-            {
-              "id": "bb1b98f1-61d9-4856-bf40-b60e1ae63d4f",
-              "version": "KqlParameterItem/1.0",
-              "name": "Subscriptions",
-              "type": 6,
-              "multiSelect": true,
-              "quote": "'",
-              "delimiter": ",",
-              "typeSettings": {
-                "additionalResourceOptions": [
-                  "value::all"
-                ],
-                "includeAll": true,
-                "showDefault": false
-              },
-              "value": [
-                "/subscriptions/892bcc8c-4ef7-4891-a300-6162ad690045"
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": {
+              "durationMs": 86400000
+            }
+          },
+          {
+            "id": "bb1b98f1-61d9-4856-bf40-b60e1ae63d4f",
+            "version": "KqlParameterItem/1.0",
+            "name": "Subscriptions",
+            "type": 6,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "includeAll": true,
+              "showDefault": false
+            },
+            "value": [
+              "/subscriptions/892bcc8c-4ef7-4891-a300-6162ad690045"
+            ]
+          },
+          {
+            "id": "38e855f7-9ee2-404a-8465-326e880801c9",
+            "version": "KqlParameterItem/1.0",
+            "name": "AKSCluster",
+            "type": 5,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "resources\r\n| where type == \"microsoft.containerservice/managedclusters\"",
+            "crossComponentResources": [
+              "{Subscriptions}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
               ]
             },
-            {
-              "id": "38e855f7-9ee2-404a-8465-326e880801c9",
-              "version": "KqlParameterItem/1.0",
-              "name": "AKSCluster",
-              "type": 5,
-              "multiSelect": true,
-              "quote": "'",
-              "delimiter": ",",
-              "query": "resources\r\n| where type == \"microsoft.containerservice/managedclusters\"",
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources",
+            "value": [
+              "/subscriptions/892bcc8c-4ef7-4891-a300-6162ad690045/resourceGroups/clustertestsolutio_group/providers/Microsoft.ContainerService/managedClusters/clustertestsolutions"
+            ]
+          },
+          {
+            "id": "61033ad9-9d1d-4c58-b27d-818c8fb38697",
+            "version": "KqlParameterItem/1.0",
+            "name": "LogAnalyticsWorkspace",
+            "label": "Log Analytics Workspace",
+            "type": 5,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "resources\r\n| where type =~ \"Microsoft.OperationalInsights/workspaces\"\r\n| project id, name",
+            "crossComponentResources": [
+              "{Subscriptions}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": []
+            },
+            "queryType": 1,
+            "resourceType": "microsoft.resourcegraph/resources",
+            "value": [
+              "/subscriptions/892bcc8c-4ef7-4891-a300-6162ad690045/resourceGroups/DefaultResourceGroup-EAU/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-892bcc8c-4ef7-4891-a300-6162ad690045-EAU"
+            ]
+          }
+        ],
+        "style": "pills",
+        "queryType": 1,
+        "resourceType": "microsoft.resourcegraph/resources"
+      },
+      "name": "parameters - 7"
+    },
+    {
+      "type": 11,
+      "content": {
+        "version": "LinkItem/1.0",
+        "style": "tabs",
+        "links": [
+          {
+            "id": "fb876e80-aa2a-4abe-bdfe-62318b989fef",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Traffic Light",
+            "subTarget": "trafficLight",
+            "style": "link"
+          },
+          {
+            "id": "a35b0779-7ee4-4e7a-b8d8-e9d47278d076",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Overview",
+            "subTarget": "overview",
+            "style": "link"
+          },
+          {
+            "id": "e3cfbb71-43bd-4f00-a6b6-8aba3d36e485",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Events",
+            "subTarget": "events",
+            "style": "link"
+          },
+          {
+            "id": "f9248a19-cc7b-4717-b4b9-db770db9ed6c",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Workloads",
+            "subTarget": "workloads",
+            "style": "link"
+          },
+          {
+            "id": "48d929bc-0419-4cd8-9366-603d39ecdc3d",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Logs",
+            "subTarget": "logs",
+            "style": "link"
+          },
+          {
+            "id": "2b173bbe-cfaa-482b-9714-f07e06296858",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Nodes",
+            "subTarget": "nodes",
+            "style": "link"
+          },
+          {
+            "id": "ff3372b1-5c0e-45e9-b67c-7a5253af7e22",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Changes",
+            "subTarget": "changes",
+            "style": "link"
+          }
+        ]
+      },
+      "name": "mainTabs"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "# Traffic Light"
+            },
+            "name": "text - 0"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "{\"version\":\"AzureHealthQuery/1.0\",\"queryType\":\"Detailed\"}",
+              "size": 3,
+              "title": "AKS Cluster Health",
+              "queryType": 4,
+              "resourceType": "microsoft.containerservice/managedclusters",
               "crossComponentResources": [
-                "{Subscriptions}"
+                "{AKSCluster}"
               ],
-              "typeSettings": {
-                "additionalResourceOptions": [
-                  "value::all"
+              "visualization": "tiles",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Availability state",
+                    "formatter": 11
+                  },
+                  {
+                    "columnMatch": "Detailed status",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Occurred time",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Reason chronicity",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Reason type",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Reported time",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Summary",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Title",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Resource group",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Subscription",
+                    "formatter": 5
+                  }
                 ]
               },
-              "queryType": 1,
-              "resourceType": "microsoft.resourcegraph/resources",
-              "value": [
-                "/subscriptions/892bcc8c-4ef7-4891-a300-6162ad690045/resourceGroups/clustertestsolutio_group/providers/Microsoft.ContainerService/managedClusters/clustertestsolutions"
+              "tileSettings": {
+                "titleContent": {
+                  "columnMatch": "Name",
+                  "formatter": 13,
+                  "formatOptions": {
+                    "linkTarget": null,
+                    "showIcon": true
+                  }
+                },
+                "leftContent": {
+                  "columnMatch": "Availability state",
+                  "formatter": 18,
+                  "formatOptions": {
+                    "thresholdsOptions": "icons",
+                    "thresholdsGrid": [
+                      {
+                        "operator": "==",
+                        "thresholdValue": "Available",
+                        "representation": "Available",
+                        "text": ""
+                      },
+                      {
+                        "operator": "!=",
+                        "thresholdValue": "Available",
+                        "representation": "error",
+                        "text": ""
+                      },
+                      {
+                        "operator": "Default",
+                        "thresholdValue": null,
+                        "representation": "unknown",
+                        "text": "{0}{1}"
+                      }
+                    ]
+                  }
+                },
+                "showBorder": false
+              }
+            },
+            "name": "query - 2",
+            "styleSettings": {
+              "padding": "10px",
+              "showBorder": true
+            }
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "trafficLight"
+      },
+      "name": "trafficLightGroup"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "# Changes (Kube Audit)\r\n\r\nKubernetes captures audit logs for all activities in the cluster. However, it needs to be explicitly enabled. Once these logs are enabled and published to a Log Analytics workspace they can be queried. \r\n\r\nThe audit logs show who deleted, patched or created new resources. Which is incredibly useful when troubleshooting issues. \r\n\r\n\r\n\r\n\r\n> The query below depends on the `Log Analytics Workspace` parameter specified for this parameter. \r\n\r\n- **[Kubernetes Audit Logs - Azure](https://learn.microsoft.com/en-us/azure/aks/monitor-aks-reference#resource-logs)**"
+            },
+            "name": "text - 0"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AzureDiagnostics\r\n| where Category in (\"kube-audit-admin\", \"kube-audit\")\r\n| project TimeGenerated, ResourceId, log_s\r\n| extend eventMessage = parse_json(log_s)\r\n| extend K8Event = parse_json(eventMessage.objectRef)\r\n| project TimeGenerated, eventMessage.verb, K8Event.name, username = eventMessage.user.username, K8Event, eventMessage\r\n| where eventMessage_verb !in (\"post\", \"get\")\r\n| where username !in (\"aksService\", \"aksProblemDetector\", \"\")\r\n| where username !has \"system:\"\r\n| project TimeGenerated, Action = eventMessage.verb, Resource = K8Event.name, Namespace = K8Event.namespace, KubernetesResource = K8Event.resource, Username = eventMessage.user.username\r\n\r\n",
+              "size": 0,
+              "title": "Kubernetes Audit Logs",
+              "noDataMessage": "No user initiated events happened within the cluster (check the log analytics workspace selected is correct). ",
+              "timeContextFromParameter": "Timerange",
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{LogAnalyticsWorkspace}"
+              ],
+              "gridSettings": {
+                "rowLimit": 2000,
+                "filter": true
+              }
+            },
+            "name": "query - 1 - Copy",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## Change Analysis\r\n\r\nAll changes in Azure are captured by the `Activity Logs` (audit trial). These logs can be tricky to parse, so there's a new way to view this data (Change Analysis). \r\n\r\n> *Note:* this resource provider may need to be enabled in your subscription. ",
+              "style": "info"
+            },
+            "customWidth": "20",
+            "name": "text - 3"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "{\"version\":\"ChangeAnalysis/1.0\",\"changeLevels\":[\"Important\",\"Normal\"]}",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "AKS Cluster Changes",
+              "noDataMessage": "No changes made to the AKS cluster",
+              "noDataMessageStyle": 3,
+              "timeContext": {
+                "durationMs": 604800000
+              },
+              "queryType": 13,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
               ]
             },
-            {
-              "id": "61033ad9-9d1d-4c58-b27d-818c8fb38697",
-              "version": "KqlParameterItem/1.0",
-              "name": "LogAnalyticsWorkspace",
-              "label": "Log Analytics Workspace",
-              "type": 5,
-              "multiSelect": true,
-              "quote": "'",
-              "delimiter": ",",
-              "query": "resources\r\n| where type =~ \"Microsoft.OperationalInsights/workspaces\"\r\n| project id, name",
+            "customWidth": "80",
+            "name": "query - 2"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "changes"
+      },
+      "name": "changesGroup"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "# Overview\r\n"
+            },
+            "name": "overviewText"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "# Service Health\r\n\r\nProvides insights into Azure service outages, planned maintenance activities and service health.\r\n\r\n### Event Types:\r\n\r\n- **Maintenance**: Planned or Unplanned maintenance events.\r\n\r\n- **ServiceIssue**: Issues related to service performance or downtime.\r\n\r\n- **HealthAdvisory**: General advisory information about services.\r\n\r\n[More Information](https://learn.microsoft.com/en-us/azure/service-health/overview)\r\n",
+              "style": "info"
+            },
+            "customWidth": "20",
+            "name": "serviceHealthText"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "ServiceHealthResources\r\n| where type =~ 'Microsoft.ResourceHealth/events'\r\n| extend eventType = properties.EventType, status = properties.Status, description = properties.Title, trackingId = properties.TrackingId, summary = properties.Summary, priority = properties.Priority, impactStartTime = properties.ImpactStartTime, impactMitigationTime = todatetime(tolong(properties.ImpactMitigationTime)), eventLevel = properties.EventLevel\r\n| where  tolong(impactStartTime) > 1\r\n| where todatetime(impactStartTime) {Timerange}\r\n| extend StartTime = todatetime(impactStartTime)\r\n| project impactStartTime, StartTime, eventLevel, status, description, eventType, summary, trackingId\r\n| summarize arg_max(todatetime(impactStartTime), StartTime, tostring(eventLevel), tostring(status), tostring(description), tostring(eventType), tostring(summary)) by tostring(trackingId)\r\n| order by StartTime\r\n//| summarize by todatetime(impactStartTime), tostring(eventLevel), tostring(status), tostring(description), tostring(eventType), tostring(summary)",
+              "size": 1,
+              "noDataMessage": "No service health alerts detected",
+              "noDataMessageStyle": 3,
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources",
               "crossComponentResources": [
                 "{Subscriptions}"
               ],
-              "typeSettings": {
-                "additionalResourceOptions": []
-              },
-              "queryType": 1,
-              "resourceType": "microsoft.resourcegraph/resources",
-              "value": [
-                "/subscriptions/892bcc8c-4ef7-4891-a300-6162ad690045/resourceGroups/DefaultResourceGroup-EAU/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-892bcc8c-4ef7-4891-a300-6162ad690045-EAU"
-              ]
-            }
-          ],
-          "style": "pills",
-          "queryType": 1,
-          "resourceType": "microsoft.resourcegraph/resources"
-        },
-        "name": "parameters - 7"
-      },
-      {
-        "type": 11,
-        "content": {
-          "version": "LinkItem/1.0",
-          "style": "tabs",
-          "links": [
-            {
-              "id": "fb876e80-aa2a-4abe-bdfe-62318b989fef",
-              "cellValue": "selectedTab",
-              "linkTarget": "parameter",
-              "linkLabel": "Traffic Light",
-              "subTarget": "trafficLight",
-              "style": "link"
-            },
-            {
-              "id": "a35b0779-7ee4-4e7a-b8d8-e9d47278d076",
-              "cellValue": "selectedTab",
-              "linkTarget": "parameter",
-              "linkLabel": "Overview",
-              "subTarget": "overview",
-              "style": "link"
-            },
-            {
-              "id": "e3cfbb71-43bd-4f00-a6b6-8aba3d36e485",
-              "cellValue": "selectedTab",
-              "linkTarget": "parameter",
-              "linkLabel": "Events",
-              "subTarget": "events",
-              "style": "link"
-            },
-            {
-              "id": "f9248a19-cc7b-4717-b4b9-db770db9ed6c",
-              "cellValue": "selectedTab",
-              "linkTarget": "parameter",
-              "linkLabel": "Workloads",
-              "subTarget": "workloads",
-              "style": "link"
-            },
-            {
-              "id": "48d929bc-0419-4cd8-9366-603d39ecdc3d",
-              "cellValue": "selectedTab",
-              "linkTarget": "parameter",
-              "linkLabel": "Logs",
-              "subTarget": "logs",
-              "style": "link"
-            },
-            {
-              "id": "2b173bbe-cfaa-482b-9714-f07e06296858",
-              "cellValue": "selectedTab",
-              "linkTarget": "parameter",
-              "linkLabel": "Nodes",
-              "subTarget": "nodes",
-              "style": "link"
-            },
-            {
-              "id": "ff3372b1-5c0e-45e9-b67c-7a5253af7e22",
-              "cellValue": "selectedTab",
-              "linkTarget": "parameter",
-              "linkLabel": "Changes",
-              "subTarget": "changes",
-              "style": "link"
-            }
-          ]
-        },
-        "name": "mainTabs"
-      },
-      {
-        "type": 12,
-        "content": {
-          "version": "NotebookGroup/1.0",
-          "groupType": "editable",
-          "items": [
-            {
-              "type": 1,
-              "content": {
-                "json": "# Traffic Light"
-              },
-              "name": "text - 0"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "{\"version\":\"AzureHealthQuery/1.0\",\"queryType\":\"Detailed\"}",
-                "size": 3,
-                "title": "AKS Cluster Health",
-                "queryType": 4,
-                "resourceType": "microsoft.containerservice/managedclusters",
-                "crossComponentResources": [
-                  "{AKSCluster}"
-                ],
-                "visualization": "tiles",
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "Availability state",
-                      "formatter": 11
-                    },
-                    {
-                      "columnMatch": "Detailed status",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Occurred time",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Reason chronicity",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Reason type",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Reported time",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Summary",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Title",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Resource group",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Subscription",
-                      "formatter": 5
-                    }
-                  ]
-                },
-                "tileSettings": {
-                  "titleContent": {
-                    "columnMatch": "Name",
-                    "formatter": 13,
-                    "formatOptions": {
-                      "linkTarget": null,
-                      "showIcon": true
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "StartTime",
+                    "formatter": 6,
+                    "dateFormat": {
+                      "formatName": "shortDateTimePattern"
                     }
                   },
-                  "leftContent": {
+                  {
+                    "columnMatch": "description",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "30%"
+                    }
+                  },
+                  {
+                    "columnMatch": "summary",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "30%"
+                    }
+                  },
+                  {
+                    "columnMatch": "impactStartTime",
+                    "formatter": 5,
+                    "dateFormat": {
+                      "showUtcTime": null,
+                      "formatName": "shortDateTimePattern"
+                    }
+                  },
+                  {
+                    "columnMatch": "eventLevel1",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "status1",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "eventType1",
+                    "formatter": 5
+                  }
+                ],
+                "rowLimit": 1000
+              },
+              "sortBy": []
+            },
+            "customWidth": "80",
+            "name": "serviceHealthQuery"
+          },
+          {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "crossComponentResources": [
+                "{Subscriptions}"
+              ],
+              "parameters": [
+                {
+                  "id": "b616a3a3-4271-4208-b1a9-a92a78efed08",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "alertResourceGroups",
+                  "label": "Resource groups",
+                  "type": 2,
+                  "isRequired": true,
+                  "multiSelect": true,
+                  "quote": "'",
+                  "delimiter": ",",
+                  "query": "Resources\r\n| summarize by resourceGroup\r\n| order by resourceGroup asc\r\n| project id=resourceGroup, resourceGroup",
+                  "crossComponentResources": [
+                    "{Subscriptions}"
+                  ],
+                  "isHiddenWhenLocked": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::all"
+                    ],
+                    "selectAllValue": "*",
+                    "showDefault": false
+                  },
+                  "queryType": 1,
+                  "resourceType": "microsoft.resourcegraph/resources",
+                  "value": [
+                    "value::all"
+                  ]
+                },
+                {
+                  "id": "0e85e0e4-a7e8-4ea8-b291-e444c317843a",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "alertResourceTypes",
+                  "label": "Resource types",
+                  "type": 7,
+                  "isRequired": true,
+                  "multiSelect": true,
+                  "quote": "'",
+                  "delimiter": ",",
+                  "query": "where \"*\" in ({alertResourceGroups}) or resourceGroup in ({alertResourceGroups})\r\n| summarize by type\r\n| project type, label=type\r\n",
+                  "crossComponentResources": [
+                    "{Subscriptions}"
+                  ],
+                  "isHiddenWhenLocked": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::all"
+                    ],
+                    "selectAllValue": "*",
+                    "showDefault": false
+                  },
+                  "queryType": 1,
+                  "resourceType": "microsoft.resourcegraph/resources",
+                  "value": [
+                    "value::all"
+                  ]
+                },
+                {
+                  "id": "f60ea0a0-3703-44ca-a59b-df0246423f41",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "alertResources",
+                  "type": 5,
+                  "isRequired": true,
+                  "multiSelect": true,
+                  "quote": "'",
+                  "delimiter": ",",
+                  "query": "Resources \r\n| order by name asc\r\n| extend Rank = row_number()\r\n| project value = id, label = name, selected = Rank <= 10, group = resourceGroup",
+                  "crossComponentResources": [
+                    "{Subscriptions}"
+                  ],
+                  "isHiddenWhenLocked": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::all"
+                    ],
+                    "selectAllValue": "*",
+                    "showDefault": false
+                  },
+                  "queryType": 1,
+                  "resourceType": "microsoft.resourcegraph/resources",
+                  "value": [
+                    "value::all"
+                  ]
+                },
+                {
+                  "id": "bd6d6075-dc8f-43d3-829f-7e2245a3eb21",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "State",
+                  "type": 2,
+                  "isRequired": true,
+                  "multiSelect": true,
+                  "quote": "'",
+                  "delimiter": ",",
+                  "query": "{\"version\":\"1.0.0\",\"content\":\"[ \\r\\n    {\\\"id\\\":\\\"New\\\", \\\"label\\\": \\\"New\\\"},\\r\\n    {\\\"id\\\":\\\"Acknowledged\\\", \\\"label\\\": \\\"Acknowledged\\\"},\\r\\n    {\\\"id\\\":\\\"Closed\\\", \\\"label\\\": \\\"Closed\\\"}\\r\\n]\",\"transformers\":null}",
+                  "isHiddenWhenLocked": true,
+                  "typeSettings": {
+                    "additionalResourceOptions": [
+                      "value::all"
+                    ],
+                    "selectAllValue": "*",
+                    "showDefault": false
+                  },
+                  "queryType": 8,
+                  "value": [
+                    "value::all"
+                  ]
+                }
+              ],
+              "style": "above",
+              "queryType": 1,
+              "resourceType": "microsoft.resourcegraph/resources"
+            },
+            "name": "parameters"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "# Alerts\r\n\r\nAlerts within your Azure environment by severity that are active within the environment.\r\n",
+              "style": "info"
+            },
+            "customWidth": "20",
+            "name": "alertsText"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "AlertsManagementResources | where type =~ 'microsoft.alertsmanagement/alerts'\r\n| where todatetime(properties.essentials.startDateTime) {Timerange} \r\n| extend State=tostring(properties.essentials.alertState)\r\n| where \"*\" in ({State}) or State in ({State})\r\n| summarize Count=count(), New=countif(State==\"New\"), \r\nAcknowledged=countif(State==\"Acknowledged\"), \r\nClosed=countif(State==\"Closed\") \r\nby Severity=tostring(properties.essentials.severity)\r\n| order by Severity asc",
+                    "size": 3,
+                    "title": "Alert Summary",
+                    "noDataMessage": "No alerts found",
+                    "noDataMessageStyle": 3,
+                    "exportMultipleValues": true,
+                    "exportedParameters": [
+                      {
+                        "fieldName": "Severity",
+                        "parameterName": "Severity",
+                        "parameterType": 1
+                      }
+                    ],
+                    "queryType": 1,
+                    "resourceType": "microsoft.resourcegraph/resources",
+                    "crossComponentResources": [
+                      "{Subscriptions}"
+                    ],
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "Severity",
+                          "formatter": 11
+                        },
+                        {
+                          "columnMatch": "Count",
+                          "formatter": 3,
+                          "formatOptions": {
+                            "min": 0,
+                            "palette": "blue",
+                            "aggregation": "Sum"
+                          },
+                          "numberFormat": {
+                            "unit": 17,
+                            "options": {
+                              "style": "decimal",
+                              "maximumFractionDigits": 2
+                            }
+                          }
+                        },
+                        {
+                          "columnMatch": "State",
+                          "formatter": 1
+                        }
+                      ]
+                    }
+                  },
+                  "showPin": true,
+                  "name": "Alert Summary"
+                },
+                {
+                  "type": 11,
+                  "content": {
+                    "version": "LinkItem/1.0",
+                    "style": "tabs",
+                    "links": [
+                      {
+                        "id": "8478a83c-1424-4e7c-8d2b-6ea45c8eaa31",
+                        "cellValue": "tab",
+                        "linkTarget": "parameter",
+                        "linkLabel": "Alert Details",
+                        "subTarget": "details",
+                        "style": "link"
+                      },
+                      {
+                        "id": "b95fc23d-ca3e-42d1-8636-7ee2135cfd50",
+                        "cellValue": "tab",
+                        "linkTarget": "parameter",
+                        "linkLabel": "Alerts by Region",
+                        "subTarget": "location",
+                        "style": "link"
+                      }
+                    ]
+                  },
+                  "conditionalVisibility": {
+                    "parameterName": "Severity",
+                    "comparison": "isNotEqualTo"
+                  },
+                  "name": "tabs"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "AlertsManagementResources \r\n| where type =~ 'microsoft.alertsmanagement/alerts'\r\n| where todatetime(properties.essentials.startDateTime) {Timerange}  \r\n| extend Severity=tostring(properties.essentials.severity)\r\n| where Severity in ({Severity})\r\n| extend State=tostring(properties.essentials.alertState)\r\n| where \"*\" in ({State}) or State in ({State})\r\n| project AlertId=id, StartTime=todatetime(tostring(properties.essentials.startDateTime)), Severity, State=tostring(properties.essentials.alertState), MonitoringCondition=tostring(properties.essentials.monitorCondition), Name=name, \r\n  TargetResource = tostring(properties.essentials.targetResource), \r\n  MonitorService = tostring(properties.essentials.monitorService),\r\n  SignalType=tostring(properties.essentials.signalType), \r\n  Description=tostring(properties.essentials.description)\r\n| order by StartTime desc\r\n",
+                    "size": 0,
+                    "title": "{$rowCount} {Severity} Alerts",
+                    "noDataMessage": "No alerts found",
+                    "queryType": 1,
+                    "resourceType": "microsoft.resourcegraph/resources",
+                    "crossComponentResources": [
+                      "{Subscriptions}"
+                    ],
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "AlertId",
+                          "formatter": 5,
+                          "formatOptions": {
+                            "linkTarget": "Resource"
+                          }
+                        },
+                        {
+                          "columnMatch": "StartTime",
+                          "formatter": 6
+                        },
+                        {
+                          "columnMatch": "Severity",
+                          "formatter": 11
+                        },
+                        {
+                          "columnMatch": "State",
+                          "formatter": 1
+                        },
+                        {
+                          "columnMatch": "Name",
+                          "formatter": 1,
+                          "formatOptions": {
+                            "linkTarget": "OpenBlade",
+                            "linkIsContextBlade": true,
+                            "bladeOpenContext": {
+                              "bladeName": "AlertDetailsTemplateBlade",
+                              "extensionName": "Microsoft_Azure_Monitoring",
+                              "bladeParameters": [
+                                {
+                                  "name": "alertId",
+                                  "source": "column",
+                                  "value": "AlertId"
+                                },
+                                {
+                                  "name": "alertName",
+                                  "source": "column",
+                                  "value": "Name"
+                                },
+                                {
+                                  "name": "invokedFrom",
+                                  "source": "static",
+                                  "value": "Workbooks"
+                                }
+                              ]
+                            }
+                          },
+                          "tooltipFormat": {
+                            "tooltip": "View alert details"
+                          }
+                        },
+                        {
+                          "columnMatch": "TargetResource",
+                          "formatter": 13,
+                          "formatOptions": {
+                            "linkTarget": "Resource",
+                            "subTarget": "alerts",
+                            "showIcon": true
+                          }
+                        },
+                        {
+                          "columnMatch": "essentials",
+                          "formatter": 5,
+                          "formatOptions": {
+                            "linkTarget": "CellDetails",
+                            "linkIsContextBlade": true
+                          }
+                        }
+                      ],
+                      "rowLimit": 1000,
+                      "filter": true
+                    }
+                  },
+                  "conditionalVisibilities": [
+                    {
+                      "parameterName": "Severity",
+                      "comparison": "isNotEqualTo"
+                    },
+                    {
+                      "parameterName": "tab",
+                      "comparison": "isEqualTo",
+                      "value": "details"
+                    }
+                  ],
+                  "showPin": true,
+                  "name": "Alerts for severity"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "AlertsManagementResources | where type =~ 'microsoft.alertsmanagement/alerts'\r\n| where todatetime(properties.essentials.startDateTime) {timeRange}  \r\n| extend Severity=tostring(properties.essentials.severity)\r\n| where Severity in ({Severity})\r\n| extend State=tostring(properties.essentials.alertState)\r\n| where \"*\" in ({State}) or State in ({State})\r\n| where \"*\" in ({ResourceTypes}) or properties.essentials.targetResourceType in~ ({ResourceTypes})\r\n| where \"*\" in ({ResourceGroups}) or properties.essentials.targetResourceGroup in~ ({ResourceGroups})\r\n| where \"*\" in ({Resources}) or properties.essentials.targetResource in~ ({Resources})\r\n| summarize Alerts=count(), New=countif(State==\"New\"), \r\nAcknowledged=countif(State==\"Acknowledged\"), \r\nClosed=countif(State==\"Closed\")\r\nby Resource=tostring(properties.essentials.targetResource )\r\n| order by Alerts desc\r\n",
+                    "size": 0,
+                    "title": "{Severity} Alerts by Region",
+                    "noDataMessage": "No alerts found",
+                    "exportMultipleValues": true,
+                    "exportAggregateParts": true,
+                    "exportedParameters": [
+                      {
+                        "parameterName": "Selected",
+                        "parameterType": 1,
+                        "quote": ""
+                      }
+                    ],
+                    "queryType": 1,
+                    "resourceType": "microsoft.resourcegraph/resources",
+                    "crossComponentResources": [
+                      "{Subscription}"
+                    ],
+                    "visualization": "map",
+                    "gridSettings": {
+                      "rowLimit": 1000
+                    },
+                    "mapSettings": {
+                      "locInfo": "AzureResource",
+                      "locInfoColumn": "Resource",
+                      "sizeSettings": "Alerts",
+                      "sizeAggregation": "Sum",
+                      "defaultSize": 0,
+                      "legendMetric": "Alerts",
+                      "legendAggregation": "Sum",
+                      "itemColorSettings": {
+                        "nodeColorField": "Alerts",
+                        "colorAggregation": "Sum",
+                        "type": "heatmap",
+                        "heatmapPalette": "greenRed"
+                      }
+                    }
+                  },
+                  "conditionalVisibilities": [
+                    {
+                      "parameterName": "Severity",
+                      "comparison": "isNotEqualTo"
+                    },
+                    {
+                      "parameterName": "tab",
+                      "comparison": "isEqualTo",
+                      "value": "location"
+                    }
+                  ],
+                  "showPin": true,
+                  "name": "Alerts map"
+                },
+                {
+                  "type": 1,
+                  "content": {
+                    "json": "💡 Select one or more regions to see Azure resources with alerts in those regions."
+                  },
+                  "conditionalVisibilities": [
+                    {
+                      "parameterName": "Selected",
+                      "comparison": "isEqualTo"
+                    },
+                    {
+                      "parameterName": "tab",
+                      "comparison": "isEqualTo",
+                      "value": "location"
+                    },
+                    {
+                      "parameterName": "Severity",
+                      "comparison": "isNotEqualTo"
+                    }
+                  ],
+                  "name": "map selection text"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "{\"version\":\"1.0.0\",\"content\":\"[{Selected}]\",\"transformers\":null}",
+                    "size": 0,
+                    "title": "Resources with {Severity} Alerts in the Selected Regions",
+                    "noDataMessage": "No alerts found",
+                    "queryType": 8,
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "$gen_group",
+                          "formatter": 13,
+                          "formatOptions": {
+                            "linkTarget": "Resource",
+                            "showIcon": true
+                          }
+                        },
+                        {
+                          "columnMatch": "regionName",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "Resource",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "Alerts",
+                          "formatter": 3,
+                          "formatOptions": {
+                            "min": 0,
+                            "palette": "blue",
+                            "aggregation": "Sum"
+                          },
+                          "numberFormat": {
+                            "unit": 17,
+                            "options": {
+                              "style": "decimal",
+                              "useGrouping": false,
+                              "maximumFractionDigits": 2
+                            }
+                          }
+                        },
+                        {
+                          "columnMatch": "New",
+                          "formatter": 0,
+                          "formatOptions": {
+                            "aggregation": "Sum"
+                          }
+                        },
+                        {
+                          "columnMatch": "Acknowledged",
+                          "formatter": 0,
+                          "formatOptions": {
+                            "aggregation": "Sum"
+                          }
+                        },
+                        {
+                          "columnMatch": "Closed",
+                          "formatter": 0,
+                          "formatOptions": {
+                            "aggregation": "Sum"
+                          }
+                        }
+                      ],
+                      "hierarchySettings": {
+                        "treeType": 1,
+                        "groupBy": [
+                          "regionName"
+                        ],
+                        "expandTopLevel": true,
+                        "finalBy": "Resource"
+                      },
+                      "labelSettings": [
+                        {
+                          "columnId": "regionName",
+                          "label": "Region"
+                        }
+                      ]
+                    }
+                  },
+                  "conditionalVisibility": {
+                    "parameterName": "Selected",
+                    "comparison": "isNotEqualTo"
+                  },
+                  "name": "selected map items"
+                }
+              ]
+            },
+            "customWidth": "80",
+            "name": "visible if subscriptions selected"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "# Resource Health\r\n\r\nInformation about the health of individual cloud resources. Resources can be in the following states:\r\n\r\n- **Available**: There's no events detected that are affecting the health of he resource.\r\n\r\n- **Unavailable**: The service detected an ongoing platform or non-platform event affecting the health of the resource.\r\n\r\n- **Unknown**: No information has been received in the last 10 minutes for this resource.\r\n\r\n- **Degraded**: Performance loss detected for the resource, but it is still avaialble.\r\n\r\n[More Information](https://learn.microsoft.com/en-us/azure/service-health/resource-health-overview)",
+              "style": "info"
+            },
+            "customWidth": "20",
+            "name": "resourceHealthText"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "{\"version\":\"AzureHealthQuery/1.0\",\"queryType\":\"Detailed\"}",
+              "size": 0,
+              "queryType": 4,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
                     "columnMatch": "Availability state",
                     "formatter": 18,
                     "formatOptions": {
@@ -304,1376 +1027,750 @@
                           "text": ""
                         },
                         {
-                          "operator": "!=",
-                          "thresholdValue": "Available",
-                          "representation": "error",
+                          "operator": "==",
+                          "thresholdValue": "Unavailable",
+                          "representation": "failed",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Degraded",
+                          "representation": "2",
                           "text": ""
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Unknown",
+                          "representation": "unknown",
+                          "text": "{0}{1}"
                         },
                         {
                           "operator": "Default",
                           "thresholdValue": null,
-                          "representation": "unknown",
-                          "text": "{0}{1}"
+                          "representation": "Unknown",
+                          "text": ""
                         }
                       ]
                     }
                   },
-                  "showBorder": false
-                }
-              },
-              "name": "query - 2",
-              "styleSettings": {
-                "padding": "10px",
-                "showBorder": true
-              }
-            }
-          ]
-        },
-        "conditionalVisibility": {
-          "parameterName": "selectedTab",
-          "comparison": "isEqualTo",
-          "value": "trafficLight"
-        },
-        "name": "trafficLightGroup"
-      },
-      {
-        "type": 12,
-        "content": {
-          "version": "NotebookGroup/1.0",
-          "groupType": "editable",
-          "items": [
-            {
-              "type": 1,
-              "content": {
-                "json": "# Changes (Kube Audit)\r\n\r\nKubernetes captures audit logs for all activities in the cluster. However, it needs to be explicitly enabled. Once these logs are enabled and published to a Log Analytics workspace they can be queried. \r\n\r\nThe audit logs show who deleted, patched or created new resources. Which is incredibly useful when troubleshooting issues. \r\n\r\n\r\n\r\n\r\n> The query below depends on the `Log Analytics Workspace` parameter specified for this parameter. "
-              },
-              "name": "text - 0"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "AzureDiagnostics\r\n| where Category in (\"kube-audit-admin\", \"kube-audit\")\r\n| project TimeGenerated, ResourceId, log_s\r\n| extend eventMessage = parse_json(log_s)\r\n| extend K8Event = parse_json(eventMessage.objectRef)\r\n| project TimeGenerated, eventMessage.verb, K8Event.name, username = eventMessage.user.username, K8Event, eventMessage\r\n| where username != \"aksService\" \r\n| where username != \"aksProblemDetector\"\r\n| where username !has \"system:\"\r\n| where eventMessage_verb != \"post\"\r\n| project TimeGenerated, Action = eventMessage.verb, Resource = K8Event.name, Namespace = K8Event.namespace, KubernetesResource = K8Event.resource, Username = eventMessage.user.username\r\n\r\n",
-                "size": 0,
-                "title": "Kubernetes Audit Logs",
-                "noDataMessage": "No user initiated events happened within the cluster (check the log analytics workspace selected is correct). ",
-                "timeContextFromParameter": "Timerange",
-                "queryType": 0,
-                "resourceType": "microsoft.operationalinsights/workspaces",
-                "crossComponentResources": [
-                  "{LogAnalyticsWorkspace}"
-                ],
-                "gridSettings": {
-                  "rowLimit": 500,
-                  "filter": true
-                }
-              },
-              "name": "query - 1 - Copy"
-            }
-          ]
-        },
-        "conditionalVisibility": {
-          "parameterName": "selectedTab",
-          "comparison": "isEqualTo",
-          "value": "changes"
-        },
-        "name": "changesGroup"
-      },
-      {
-        "type": 12,
-        "content": {
-          "version": "NotebookGroup/1.0",
-          "groupType": "editable",
-          "items": [
-            {
-              "type": 1,
-              "content": {
-                "json": "# Overview\r\n"
-              },
-              "name": "overviewText"
-            },
-            {
-              "type": 1,
-              "content": {
-                "json": "# Service Health\r\n\r\nProvides insights into Azure service outages, planned maintenance activities and service health.\r\n\r\n### Event Types:\r\n\r\n- **Maintenance**: Planned or Unplanned maintenance events.\r\n\r\n- **ServiceIssue**: Issues related to service performance or downtime.\r\n\r\n- **HealthAdvisory**: General advisory information about services.\r\n\r\n[More Information](https://learn.microsoft.com/en-us/azure/service-health/overview)\r\n",
-                "style": "info"
-              },
-              "customWidth": "20",
-              "name": "serviceHealthText"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "ServiceHealthResources\r\n| where type =~ 'Microsoft.ResourceHealth/events'\r\n| extend eventType = properties.EventType, status = properties.Status, description = properties.Title, trackingId = properties.TrackingId, summary = properties.Summary, priority = properties.Priority, impactStartTime = properties.ImpactStartTime, impactMitigationTime = todatetime(tolong(properties.ImpactMitigationTime)), eventLevel = properties.EventLevel\r\n| where  tolong(impactStartTime) > 1\r\n| where todatetime(impactStartTime) {Timerange}\r\n| extend StartTime = todatetime(impactStartTime)\r\n| project impactStartTime, StartTime, eventLevel, status, description, eventType, summary, trackingId\r\n| summarize arg_max(todatetime(impactStartTime), StartTime, tostring(eventLevel), tostring(status), tostring(description), tostring(eventType), tostring(summary)) by tostring(trackingId)\r\n| order by StartTime\r\n//| summarize by todatetime(impactStartTime), tostring(eventLevel), tostring(status), tostring(description), tostring(eventType), tostring(summary)",
-                "size": 1,
-                "noDataMessage": "No service health alerts detected",
-                "noDataMessageStyle": 3,
-                "queryType": 1,
-                "resourceType": "microsoft.resourcegraph/resources",
-                "crossComponentResources": [
-                  "{Subscriptions}"
-                ],
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "StartTime",
-                      "formatter": 6,
-                      "dateFormat": {
-                        "formatName": "shortDateTimePattern"
-                      }
-                    },
-                    {
-                      "columnMatch": "description",
-                      "formatter": 0,
-                      "formatOptions": {
-                        "customColumnWidthSetting": "30%"
-                      }
-                    },
-                    {
-                      "columnMatch": "summary",
-                      "formatter": 0,
-                      "formatOptions": {
-                        "customColumnWidthSetting": "30%"
-                      }
-                    },
-                    {
-                      "columnMatch": "impactStartTime",
-                      "formatter": 5,
-                      "dateFormat": {
-                        "showUtcTime": null,
-                        "formatName": "shortDateTimePattern"
-                      }
-                    },
-                    {
-                      "columnMatch": "eventLevel1",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "status1",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "eventType1",
-                      "formatter": 5
-                    }
-                  ],
-                  "rowLimit": 1000
-                },
-                "sortBy": []
-              },
-              "customWidth": "80",
-              "name": "serviceHealthQuery"
-            },
-            {
-              "type": 9,
-              "content": {
-                "version": "KqlParameterItem/1.0",
-                "crossComponentResources": [
-                  "{Subscriptions}"
-                ],
-                "parameters": [
                   {
-                    "id": "b616a3a3-4271-4208-b1a9-a92a78efed08",
-                    "version": "KqlParameterItem/1.0",
-                    "name": "alertResourceGroups",
-                    "label": "Resource groups",
-                    "type": 2,
-                    "isRequired": true,
-                    "multiSelect": true,
-                    "quote": "'",
-                    "delimiter": ",",
-                    "query": "Resources\r\n| summarize by resourceGroup\r\n| order by resourceGroup asc\r\n| project id=resourceGroup, resourceGroup",
-                    "crossComponentResources": [
-                      "{Subscriptions}"
-                    ],
-                    "isHiddenWhenLocked": true,
-                    "typeSettings": {
-                      "additionalResourceOptions": [
-                        "value::all"
-                      ],
-                      "selectAllValue": "*",
-                      "showDefault": false
-                    },
-                    "queryType": 1,
-                    "resourceType": "microsoft.resourcegraph/resources",
-                    "value": [
-                      "value::all"
-                    ]
+                    "columnMatch": "Detailed status",
+                    "formatter": 5
                   },
                   {
-                    "id": "0e85e0e4-a7e8-4ea8-b291-e444c317843a",
-                    "version": "KqlParameterItem/1.0",
-                    "name": "alertResourceTypes",
-                    "label": "Resource types",
-                    "type": 7,
-                    "isRequired": true,
-                    "multiSelect": true,
-                    "quote": "'",
-                    "delimiter": ",",
-                    "query": "where \"*\" in ({alertResourceGroups}) or resourceGroup in ({alertResourceGroups})\r\n| summarize by type\r\n| project type, label=type\r\n",
-                    "crossComponentResources": [
-                      "{Subscriptions}"
-                    ],
-                    "isHiddenWhenLocked": true,
-                    "typeSettings": {
-                      "additionalResourceOptions": [
-                        "value::all"
-                      ],
-                      "selectAllValue": "*",
-                      "showDefault": false
-                    },
-                    "queryType": 1,
-                    "resourceType": "microsoft.resourcegraph/resources",
-                    "value": [
-                      "value::all"
-                    ]
+                    "columnMatch": "Reported time",
+                    "formatter": 5
                   },
                   {
-                    "id": "f60ea0a0-3703-44ca-a59b-df0246423f41",
-                    "version": "KqlParameterItem/1.0",
-                    "name": "alertResources",
-                    "type": 5,
-                    "isRequired": true,
-                    "multiSelect": true,
-                    "quote": "'",
-                    "delimiter": ",",
-                    "query": "Resources \r\n| order by name asc\r\n| extend Rank = row_number()\r\n| project value = id, label = name, selected = Rank <= 10, group = resourceGroup",
-                    "crossComponentResources": [
-                      "{Subscriptions}"
-                    ],
-                    "isHiddenWhenLocked": true,
-                    "typeSettings": {
-                      "additionalResourceOptions": [
-                        "value::all"
-                      ],
-                      "selectAllValue": "*",
-                      "showDefault": false
-                    },
-                    "queryType": 1,
-                    "resourceType": "microsoft.resourcegraph/resources",
-                    "value": [
-                      "value::all"
-                    ]
+                    "columnMatch": "Title",
+                    "formatter": 5
                   },
                   {
-                    "id": "bd6d6075-dc8f-43d3-829f-7e2245a3eb21",
-                    "version": "KqlParameterItem/1.0",
-                    "name": "State",
-                    "type": 2,
-                    "isRequired": true,
-                    "multiSelect": true,
-                    "quote": "'",
-                    "delimiter": ",",
-                    "query": "{\"version\":\"1.0.0\",\"content\":\"[ \\r\\n    {\\\"id\\\":\\\"New\\\", \\\"label\\\": \\\"New\\\"},\\r\\n    {\\\"id\\\":\\\"Acknowledged\\\", \\\"label\\\": \\\"Acknowledged\\\"},\\r\\n    {\\\"id\\\":\\\"Closed\\\", \\\"label\\\": \\\"Closed\\\"}\\r\\n]\",\"transformers\":null}",
-                    "isHiddenWhenLocked": true,
-                    "typeSettings": {
-                      "additionalResourceOptions": [
-                        "value::all"
-                      ],
-                      "selectAllValue": "*",
-                      "showDefault": false
-                    },
-                    "queryType": 8,
-                    "value": [
-                      "value::all"
-                    ]
+                    "columnMatch": "Resource group",
+                    "formatter": 5
                   }
                 ],
-                "style": "above",
-                "queryType": 1,
-                "resourceType": "microsoft.resourcegraph/resources"
-              },
-              "name": "parameters"
+                "rowLimit": 1000
+              }
             },
-            {
-              "type": 1,
-              "content": {
-                "json": "# Alerts\r\n\r\nAlerts by severity that are active within the environment.",
-                "style": "info"
-              },
-              "customWidth": "20",
-              "name": "alertsText"
+            "customWidth": "80",
+            "name": "resourceHealth"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "overview"
+      },
+      "name": "overviewGroup"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "# Events\r\n\r\nEvery action in a Kubernetes cluster generates an event. Events are critical to understanding issues with the resources running in an Azure Kubernetes Cluster. \r\n\r\nBy default the `container insights` add-on will only capture **warning** events (to Modify this review the [Data Collection Settings](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-agent-config) documentation).\r\n\r\n- **[What are Events](https://www.cncf.io/blog/2021/12/21/extracting-value-from-the-kubernetes-events-feed/)**"
             },
-            {
-              "type": 12,
-              "content": {
-                "version": "NotebookGroup/1.0",
-                "groupType": "editable",
-                "items": [
+            "name": "complianceOverview"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| summarize count() by ObjectKind",
+              "size": 0,
+              "title": "Failed Events by Object Kind",
+              "noDataMessage": "No events detected",
+              "noDataMessageStyle": 3,
+              "timeContextFromParameter": "Timerange",
+              "showRefreshButton": true,
+              "queryType": 0,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "visualization": "piechart",
+              "gridSettings": {
+                "formatters": [
                   {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "AlertsManagementResources | where type =~ 'microsoft.alertsmanagement/alerts'\r\n| where todatetime(properties.essentials.startDateTime) {Timerange} \r\n| extend State=tostring(properties.essentials.alertState)\r\n| where \"*\" in ({State}) or State in ({State})\r\n| summarize Count=count(), New=countif(State==\"New\"), \r\nAcknowledged=countif(State==\"Acknowledged\"), \r\nClosed=countif(State==\"Closed\") \r\nby Severity=tostring(properties.essentials.severity)\r\n| order by Severity asc",
-                      "size": 3,
-                      "title": "Alert Summary",
-                      "noDataMessage": "No alerts found",
-                      "noDataMessageStyle": 3,
-                      "exportMultipleValues": true,
-                      "exportedParameters": [
-                        {
-                          "fieldName": "Severity",
-                          "parameterName": "Severity",
-                          "parameterType": 1
-                        }
-                      ],
-                      "queryType": 1,
-                      "resourceType": "microsoft.resourcegraph/resources",
-                      "crossComponentResources": [
-                        "{Subscriptions}"
-                      ],
-                      "gridSettings": {
-                        "formatters": [
-                          {
-                            "columnMatch": "Severity",
-                            "formatter": 11
-                          },
-                          {
-                            "columnMatch": "Count",
-                            "formatter": 3,
-                            "formatOptions": {
-                              "min": 0,
-                              "palette": "blue",
-                              "aggregation": "Sum"
-                            },
-                            "numberFormat": {
-                              "unit": 17,
-                              "options": {
-                                "style": "decimal",
-                                "maximumFractionDigits": 2
-                              }
-                            }
-                          },
-                          {
-                            "columnMatch": "State",
-                            "formatter": 1
-                          }
-                        ]
-                      }
-                    },
-                    "showPin": true,
-                    "name": "Alert Summary"
-                  },
+                    "columnMatch": "_ResourceId",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": null,
+                      "showIcon": true
+                    }
+                  }
+                ],
+                "rowLimit": 2000,
+                "filter": true
+              }
+            },
+            "customWidth": "33",
+            "name": "eventsByObject"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| summarize count() by Reason",
+              "size": 0,
+              "title": "Failed Events by Reason",
+              "noDataMessage": "No events detected",
+              "noDataMessageStyle": 3,
+              "timeContextFromParameter": "Timerange",
+              "showRefreshButton": true,
+              "queryType": 0,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "visualization": "piechart",
+              "gridSettings": {
+                "formatters": [
                   {
-                    "type": 11,
-                    "content": {
-                      "version": "LinkItem/1.0",
-                      "style": "tabs",
-                      "links": [
+                    "columnMatch": "_ResourceId",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": null,
+                      "showIcon": true
+                    }
+                  }
+                ],
+                "rowLimit": 2000,
+                "filter": true
+              }
+            },
+            "customWidth": "33",
+            "name": "eventsByReason"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| summarize count() by Namespace",
+              "size": 0,
+              "title": "Failed Events by Namespace",
+              "noDataMessage": "No events detected",
+              "noDataMessageStyle": 3,
+              "timeContextFromParameter": "Timerange",
+              "showRefreshButton": true,
+              "queryType": 0,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "visualization": "piechart",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "_ResourceId",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": null,
+                      "showIcon": true
+                    }
+                  }
+                ],
+                "rowLimit": 2000,
+                "filter": true
+              }
+            },
+            "customWidth": "33",
+            "name": "eventsByNamespace"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "KubeEvents\r\n| project TimeGenerated, Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| order by TimeGenerated",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Failed Events Detailed View",
+              "noDataMessage": "No events detected",
+              "noDataMessageStyle": 3,
+              "timeContextFromParameter": "Timerange",
+              "showRefreshButton": true,
+              "queryType": 0,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "_ResourceId",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": null,
+                      "showIcon": true
+                    }
+                  }
+                ],
+                "rowLimit": 2000,
+                "filter": true
+              }
+            },
+            "name": "eventsOutput - Copy"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "events"
+      },
+      "name": "eventsGroup"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "# Workloads\r\n\r\nWithin Kubernetes containers can run in different workload types. All containers run in a **Pod** but pods can be managed by different **controllers**. Below outlines information on pods and deployments (most common workload type). "
+            },
+            "name": "networkOverview"
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "Deployments",
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "InsightsMetrics\r\n| where Name == \"kube_deployment_status_replicas_ready\"\r\n| extend Details = parse_json(Tags)\r\n| project Deployment = Details.deployment, Namespace = Details.k8sNamespace, Requested = Details.spec_replicas, Available = Details.status_replicas_available,   TimeGenerated\r\n| summarize arg_max(TimeGenerated, Deployment, Namespace, Requested, Available) by tostring(Deployment), tostring(Namespace),tostring( Requested), tostring(Available)\r\n| order by toint(Available) asc",
+                    "size": 0,
+                    "title": "Deployment Summary",
+                    "timeContextFromParameter": "Timerange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.containerservice/managedclusters",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "gridSettings": {
+                      "formatters": [
                         {
-                          "id": "8478a83c-1424-4e7c-8d2b-6ea45c8eaa31",
-                          "cellValue": "tab",
-                          "linkTarget": "parameter",
-                          "linkLabel": "Alert Details",
-                          "subTarget": "details",
-                          "style": "link"
+                          "columnMatch": "TimeGenerated",
+                          "formatter": 5
                         },
                         {
-                          "id": "b95fc23d-ca3e-42d1-8636-7ee2135cfd50",
-                          "cellValue": "tab",
-                          "linkTarget": "parameter",
-                          "linkLabel": "Alerts by Region",
-                          "subTarget": "location",
-                          "style": "link"
-                        }
-                      ]
-                    },
-                    "conditionalVisibility": {
-                      "parameterName": "Severity",
-                      "comparison": "isNotEqualTo"
-                    },
-                    "name": "tabs"
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "AlertsManagementResources \r\n| where type =~ 'microsoft.alertsmanagement/alerts'\r\n| where todatetime(properties.essentials.startDateTime) {Timerange}  \r\n| extend Severity=tostring(properties.essentials.severity)\r\n| where Severity in ({Severity})\r\n| extend State=tostring(properties.essentials.alertState)\r\n| where \"*\" in ({State}) or State in ({State})\r\n| project AlertId=id, StartTime=todatetime(tostring(properties.essentials.startDateTime)), Severity, State=tostring(properties.essentials.alertState), MonitoringCondition=tostring(properties.essentials.monitorCondition), Name=name, \r\n  TargetResource = tostring(properties.essentials.targetResource), \r\n  MonitorService = tostring(properties.essentials.monitorService),\r\n  SignalType=tostring(properties.essentials.signalType), \r\n  Description=tostring(properties.essentials.description)\r\n| order by StartTime desc\r\n",
-                      "size": 0,
-                      "title": "{$rowCount} {Severity} Alerts",
-                      "noDataMessage": "No alerts found",
-                      "queryType": 1,
-                      "resourceType": "microsoft.resourcegraph/resources",
-                      "crossComponentResources": [
-                        "{Subscriptions}"
-                      ],
-                      "gridSettings": {
-                        "formatters": [
-                          {
-                            "columnMatch": "AlertId",
-                            "formatter": 5,
-                            "formatOptions": {
-                              "linkTarget": "Resource"
-                            }
-                          },
-                          {
-                            "columnMatch": "StartTime",
-                            "formatter": 6
-                          },
-                          {
-                            "columnMatch": "Severity",
-                            "formatter": 11
-                          },
-                          {
-                            "columnMatch": "State",
-                            "formatter": 1
-                          },
-                          {
-                            "columnMatch": "Name",
-                            "formatter": 1,
-                            "formatOptions": {
-                              "linkTarget": "OpenBlade",
-                              "linkIsContextBlade": true,
-                              "bladeOpenContext": {
-                                "bladeName": "AlertDetailsTemplateBlade",
-                                "extensionName": "Microsoft_Azure_Monitoring",
-                                "bladeParameters": [
-                                  {
-                                    "name": "alertId",
-                                    "source": "column",
-                                    "value": "AlertId"
-                                  },
-                                  {
-                                    "name": "alertName",
-                                    "source": "column",
-                                    "value": "Name"
-                                  },
-                                  {
-                                    "name": "invokedFrom",
-                                    "source": "static",
-                                    "value": "Workbooks"
-                                  }
-                                ]
-                              }
-                            },
-                            "tooltipFormat": {
-                              "tooltip": "View alert details"
-                            }
-                          },
-                          {
-                            "columnMatch": "TargetResource",
-                            "formatter": 13,
-                            "formatOptions": {
-                              "linkTarget": "Resource",
-                              "subTarget": "alerts",
-                              "showIcon": true
-                            }
-                          },
-                          {
-                            "columnMatch": "essentials",
-                            "formatter": 5,
-                            "formatOptions": {
-                              "linkTarget": "CellDetails",
-                              "linkIsContextBlade": true
-                            }
-                          }
-                        ],
-                        "rowLimit": 1000,
-                        "filter": true
-                      }
-                    },
-                    "conditionalVisibilities": [
-                      {
-                        "parameterName": "Severity",
-                        "comparison": "isNotEqualTo"
-                      },
-                      {
-                        "parameterName": "tab",
-                        "comparison": "isEqualTo",
-                        "value": "details"
-                      }
-                    ],
-                    "showPin": true,
-                    "name": "Alerts for severity"
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "AlertsManagementResources | where type =~ 'microsoft.alertsmanagement/alerts'\r\n| where todatetime(properties.essentials.startDateTime) {timeRange}  \r\n| extend Severity=tostring(properties.essentials.severity)\r\n| where Severity in ({Severity})\r\n| extend State=tostring(properties.essentials.alertState)\r\n| where \"*\" in ({State}) or State in ({State})\r\n| where \"*\" in ({ResourceTypes}) or properties.essentials.targetResourceType in~ ({ResourceTypes})\r\n| where \"*\" in ({ResourceGroups}) or properties.essentials.targetResourceGroup in~ ({ResourceGroups})\r\n| where \"*\" in ({Resources}) or properties.essentials.targetResource in~ ({Resources})\r\n| summarize Alerts=count(), New=countif(State==\"New\"), \r\nAcknowledged=countif(State==\"Acknowledged\"), \r\nClosed=countif(State==\"Closed\")\r\nby Resource=tostring(properties.essentials.targetResource )\r\n| order by Alerts desc\r\n",
-                      "size": 0,
-                      "title": "{Severity} Alerts by Region",
-                      "noDataMessage": "No alerts found",
-                      "exportMultipleValues": true,
-                      "exportAggregateParts": true,
-                      "exportedParameters": [
-                        {
-                          "parameterName": "Selected",
-                          "parameterType": 1,
-                          "quote": ""
-                        }
-                      ],
-                      "queryType": 1,
-                      "resourceType": "microsoft.resourcegraph/resources",
-                      "crossComponentResources": [
-                        "{Subscription}"
-                      ],
-                      "visualization": "map",
-                      "gridSettings": {
-                        "rowLimit": 1000
-                      },
-                      "mapSettings": {
-                        "locInfo": "AzureResource",
-                        "locInfoColumn": "Resource",
-                        "sizeSettings": "Alerts",
-                        "sizeAggregation": "Sum",
-                        "defaultSize": 0,
-                        "legendMetric": "Alerts",
-                        "legendAggregation": "Sum",
-                        "itemColorSettings": {
-                          "nodeColorField": "Alerts",
-                          "colorAggregation": "Sum",
-                          "type": "heatmap",
-                          "heatmapPalette": "greenRed"
-                        }
-                      }
-                    },
-                    "conditionalVisibilities": [
-                      {
-                        "parameterName": "Severity",
-                        "comparison": "isNotEqualTo"
-                      },
-                      {
-                        "parameterName": "tab",
-                        "comparison": "isEqualTo",
-                        "value": "location"
-                      }
-                    ],
-                    "showPin": true,
-                    "name": "Alerts map"
-                  },
-                  {
-                    "type": 1,
-                    "content": {
-                      "json": "💡 Select one or more regions to see Azure resources with alerts in those regions."
-                    },
-                    "conditionalVisibilities": [
-                      {
-                        "parameterName": "Selected",
-                        "comparison": "isEqualTo"
-                      },
-                      {
-                        "parameterName": "tab",
-                        "comparison": "isEqualTo",
-                        "value": "location"
-                      },
-                      {
-                        "parameterName": "Severity",
-                        "comparison": "isNotEqualTo"
-                      }
-                    ],
-                    "name": "map selection text"
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "{\"version\":\"1.0.0\",\"content\":\"[{Selected}]\",\"transformers\":null}",
-                      "size": 0,
-                      "title": "Resources with {Severity} Alerts in the Selected Regions",
-                      "noDataMessage": "No alerts found",
-                      "queryType": 8,
-                      "gridSettings": {
-                        "formatters": [
-                          {
-                            "columnMatch": "$gen_group",
-                            "formatter": 13,
-                            "formatOptions": {
-                              "linkTarget": "Resource",
-                              "showIcon": true
-                            }
-                          },
-                          {
-                            "columnMatch": "regionName",
-                            "formatter": 5
-                          },
-                          {
-                            "columnMatch": "Resource",
-                            "formatter": 5
-                          },
-                          {
-                            "columnMatch": "Alerts",
-                            "formatter": 3,
-                            "formatOptions": {
-                              "min": 0,
-                              "palette": "blue",
-                              "aggregation": "Sum"
-                            },
-                            "numberFormat": {
-                              "unit": 17,
-                              "options": {
-                                "style": "decimal",
-                                "useGrouping": false,
-                                "maximumFractionDigits": 2
-                              }
-                            }
-                          },
-                          {
-                            "columnMatch": "New",
-                            "formatter": 0,
-                            "formatOptions": {
-                              "aggregation": "Sum"
-                            }
-                          },
-                          {
-                            "columnMatch": "Acknowledged",
-                            "formatter": 0,
-                            "formatOptions": {
-                              "aggregation": "Sum"
-                            }
-                          },
-                          {
-                            "columnMatch": "Closed",
-                            "formatter": 0,
-                            "formatOptions": {
-                              "aggregation": "Sum"
-                            }
-                          }
-                        ],
-                        "hierarchySettings": {
-                          "treeType": 1,
-                          "groupBy": [
-                            "regionName"
-                          ],
-                          "expandTopLevel": true,
-                          "finalBy": "Resource"
+                          "columnMatch": "Deployment1",
+                          "formatter": 5
                         },
-                        "labelSettings": [
-                          {
-                            "columnId": "regionName",
-                            "label": "Region"
-                          }
-                        ]
-                      }
-                    },
-                    "conditionalVisibility": {
-                      "parameterName": "Selected",
-                      "comparison": "isNotEqualTo"
-                    },
-                    "name": "selected map items"
-                  }
-                ]
-              },
-              "customWidth": "80",
-              "name": "visible if subscriptions selected"
-            },
-            {
-              "type": 1,
-              "content": {
-                "json": "# Resource Health\r\n\r\nInformation about the health of individual cloud resources. Resources can be in the following states:\r\n\r\n- **Available**: There's no events detected that are affecting the health of he resource.\r\n\r\n- **Unavailable**: The service detected an ongoing platform or non-platform event affecting the health of the resource.\r\n\r\n- **Unknown**: No information has been received in the last 10 minutes for this resource.\r\n\r\n- **Degraded**: Performance loss detected for the resource, but it is still avaialble.\r\n\r\n[More Information](https://learn.microsoft.com/en-us/azure/service-health/resource-health-overview)",
-                "style": "info"
-              },
-              "customWidth": "20",
-              "name": "resourceHealthText"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "{\"version\":\"AzureHealthQuery/1.0\",\"queryType\":\"Detailed\"}",
-                "size": 0,
-                "queryType": 4,
-                "resourceType": "microsoft.containerservice/managedclusters",
-                "crossComponentResources": [
-                  "{AKSCluster}"
-                ],
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "Availability state",
-                      "formatter": 18,
-                      "formatOptions": {
-                        "thresholdsOptions": "icons",
-                        "thresholdsGrid": [
-                          {
-                            "operator": "==",
-                            "thresholdValue": "Available",
-                            "representation": "Available",
-                            "text": ""
-                          },
-                          {
-                            "operator": "==",
-                            "thresholdValue": "Unavailable",
-                            "representation": "failed",
-                            "text": "{0}{1}"
-                          },
-                          {
-                            "operator": "==",
-                            "thresholdValue": "Degraded",
-                            "representation": "2",
-                            "text": ""
-                          },
-                          {
-                            "operator": "==",
-                            "thresholdValue": "Unknown",
-                            "representation": "unknown",
-                            "text": "{0}{1}"
-                          },
-                          {
-                            "operator": "Default",
-                            "thresholdValue": null,
-                            "representation": "Unknown",
-                            "text": ""
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "columnMatch": "Detailed status",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Reported time",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Title",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Resource group",
-                      "formatter": 5
-                    }
-                  ],
-                  "rowLimit": 1000
-                }
-              },
-              "customWidth": "80",
-              "name": "resourceHealth"
-            }
-          ]
-        },
-        "conditionalVisibility": {
-          "parameterName": "selectedTab",
-          "comparison": "isEqualTo",
-          "value": "overview"
-        },
-        "name": "overviewGroup"
-      },
-      {
-        "type": 12,
-        "content": {
-          "version": "NotebookGroup/1.0",
-          "groupType": "editable",
-          "items": [
-            {
-              "type": 1,
-              "content": {
-                "json": "# Events\r\n\r\nEvery action in a Kubernetes cluster generates an event. Events are critical to understanding issues with the resources running in an Azure Kubernetes Cluster. \r\n\r\nBy default the `container insights` add-on will only capture warning events."
-              },
-              "name": "complianceOverview"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| summarize count() by ObjectKind",
-                "size": 0,
-                "title": "Failed Events by Object Kind",
-                "timeContextFromParameter": "Timerange",
-                "showRefreshButton": true,
-                "queryType": 0,
-                "crossComponentResources": [
-                  "{AKSCluster}"
-                ],
-                "visualization": "piechart",
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "_ResourceId",
-                      "formatter": 13,
-                      "formatOptions": {
-                        "linkTarget": null,
-                        "showIcon": true
-                      }
-                    }
-                  ],
-                  "rowLimit": 2000,
-                  "filter": true
-                }
-              },
-              "customWidth": "33",
-              "name": "eventsByObject"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| summarize count() by Reason",
-                "size": 0,
-                "title": "Failed Events by Reason",
-                "timeContextFromParameter": "Timerange",
-                "showRefreshButton": true,
-                "queryType": 0,
-                "resourceType": "microsoft.containerservice/managedclusters",
-                "crossComponentResources": [
-                  "{AKSCluster}"
-                ],
-                "visualization": "piechart",
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "_ResourceId",
-                      "formatter": 13,
-                      "formatOptions": {
-                        "linkTarget": null,
-                        "showIcon": true
-                      }
-                    }
-                  ],
-                  "rowLimit": 2000,
-                  "filter": true
-                }
-              },
-              "customWidth": "33",
-              "name": "eventsByReason"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| summarize count() by Namespace",
-                "size": 0,
-                "title": "Failed Events by Namespace",
-                "timeContextFromParameter": "Timerange",
-                "showRefreshButton": true,
-                "queryType": 0,
-                "resourceType": "microsoft.containerservice/managedclusters",
-                "crossComponentResources": [
-                  "{AKSCluster}"
-                ],
-                "visualization": "piechart",
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "_ResourceId",
-                      "formatter": 13,
-                      "formatOptions": {
-                        "linkTarget": null,
-                        "showIcon": true
-                      }
-                    }
-                  ],
-                  "rowLimit": 2000,
-                  "filter": true
-                }
-              },
-              "customWidth": "33",
-              "name": "eventsByNamespace"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "KubeEvents\r\n| project TimeGenerated, Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| order by TimeGenerated",
-                "size": 0,
-                "showAnalytics": true,
-                "title": "Failed Events Detailed View",
-                "timeContextFromParameter": "Timerange",
-                "showRefreshButton": true,
-                "queryType": 0,
-                "resourceType": "microsoft.containerservice/managedclusters",
-                "crossComponentResources": [
-                  "{AKSCluster}"
-                ],
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "_ResourceId",
-                      "formatter": 13,
-                      "formatOptions": {
-                        "linkTarget": null,
-                        "showIcon": true
-                      }
-                    }
-                  ],
-                  "rowLimit": 2000,
-                  "filter": true
-                }
-              },
-              "name": "eventsOutput - Copy"
-            }
-          ]
-        },
-        "conditionalVisibility": {
-          "parameterName": "selectedTab",
-          "comparison": "isEqualTo",
-          "value": "events"
-        },
-        "name": "eventsGroup"
-      },
-      {
-        "type": 12,
-        "content": {
-          "version": "NotebookGroup/1.0",
-          "groupType": "editable",
-          "items": [
-            {
-              "type": 1,
-              "content": {
-                "json": "# Workloads\r\n\r\nWithin Kubernetes containers can run in different workload types. All containers run in a **Pod** but pods can be managed by different **controllers**. Below outlines information on pods and deployments (most common workload type). "
-              },
-              "name": "networkOverview"
-            },
-            {
-              "type": 12,
-              "content": {
-                "version": "NotebookGroup/1.0",
-                "groupType": "editable",
-                "title": "Deployments",
-                "items": [
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "InsightsMetrics\r\n| where Name == \"kube_deployment_status_replicas_ready\"\r\n| extend Details = parse_json(Tags)\r\n| project Deployment = Details.deployment, Namespace = Details.k8sNamespace, Requested = Details.spec_replicas, Available = Details.status_replicas_available,   TimeGenerated\r\n| summarize arg_max(TimeGenerated, Deployment, Namespace, Requested, Available) by tostring(Deployment), tostring(Namespace),tostring( Requested), tostring(Available)\r\n| order by toint(Available) asc",
-                      "size": 0,
-                      "title": "Deployment Summary",
-                      "timeContextFromParameter": "Timerange",
-                      "queryType": 0,
-                      "resourceType": "microsoft.containerservice/managedclusters",
-                      "crossComponentResources": [
-                        "{AKSCluster}"
+                        {
+                          "columnMatch": "Namespace1",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "Requested1",
+                          "formatter": 5
+                        },
+                        {
+                          "columnMatch": "Available1",
+                          "formatter": 5
+                        }
                       ],
-                      "gridSettings": {
-                        "formatters": [
-                          {
-                            "columnMatch": "TimeGenerated",
-                            "formatter": 5
-                          },
-                          {
-                            "columnMatch": "Deployment1",
-                            "formatter": 5
-                          },
-                          {
-                            "columnMatch": "Namespace1",
-                            "formatter": 5
-                          },
-                          {
-                            "columnMatch": "Requested1",
-                            "formatter": 5
-                          },
-                          {
-                            "columnMatch": "Available1",
-                            "formatter": 5
-                          }
-                        ]
-                      }
-                    },
-                    "customWidth": "50",
-                    "name": "query - 1"
+                      "filter": true
+                    }
                   },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "InsightsMetrics\r\n| where Name == \"kube_deployment_status_replicas_ready\"\r\n| extend Details = parse_json(Tags)\r\n| project Deployment = Details.deployment, Namespace = Details.k8sNamespace, Requested = toint(Details.spec_replicas), Available = toint(Details.status_replicas_available),   TimeGenerated\r\n| summarize count( toint(Available) == 0 ) by tostring(Deployment), bin(TimeGenerated, 5m)",
-                      "size": 0,
-                      "aggregation": 5,
-                      "title": "Deployments with 0 available Replicas",
-                      "timeContextFromParameter": "Timerange",
-                      "queryType": 0,
-                      "resourceType": "microsoft.containerservice/managedclusters",
-                      "crossComponentResources": [
-                        "{AKSCluster}"
-                      ],
-                      "visualization": "timechart"
-                    },
-                    "customWidth": "50",
-                    "name": "query - 1 - Copy"
-                  }
-                ]
-              },
-              "name": "deploymentGroup",
-              "styleSettings": {
-                "showBorder": true
-              }
-            },
-            {
-              "type": 12,
-              "content": {
-                "version": "NotebookGroup/1.0",
-                "groupType": "editable",
-                "title": "Pods",
-                "items": [
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "KubePodInventory\r\n| where PodStatus !in (\"Running\", \"Succeeded\")\r\n| project TimeGenerated, Name, _ResourceId, ContainerStatus, Namespace, PodStatus, ControllerName\r\n| summarize count() by ControllerName, bin(TimeGenerated, 10m)",
-                      "size": 0,
-                      "title": "Pod - Non Running State",
-                      "timeContextFromParameter": "Timerange",
-                      "queryType": 0,
-                      "resourceType": "microsoft.containerservice/managedclusters",
-                      "crossComponentResources": [
-                        "{AKSCluster}"
-                      ],
-                      "visualization": "linechart"
-                    },
-                    "customWidth": "50",
-                    "name": "Pod - Non Running State"
-                  },
-                  {
-                    "type": 3,
-                    "content": {
-                      "version": "KqlItem/1.0",
-                      "query": "KubePodInventory\r\n| where PodStatus !in (\"Running\", \"Succeeded\")\r\n| project TimeGenerated, Name, _ResourceId, ContainerStatus, Namespace, PodStatus, ControllerName\r\n| summarize count() by ControllerName, PodStatus, ContainerStatus\r\n| order by count_",
-                      "size": 0,
-                      "title": "Pod - Non Running State",
-                      "timeContextFromParameter": "Timerange",
-                      "queryType": 0,
-                      "resourceType": "microsoft.containerservice/managedclusters",
-                      "crossComponentResources": [
-                        "{AKSCluster}"
-                      ],
-                      "visualization": "table"
-                    },
-                    "customWidth": "50",
-                    "name": "Pod - Non Running State - Copy"
-                  }
-                ]
-              },
-              "name": "podGroups",
-              "styleSettings": {
-                "showBorder": true
-              }
-            }
-          ]
-        },
-        "conditionalVisibility": {
-          "parameterName": "selectedTab",
-          "comparison": "isEqualTo",
-          "value": "workloads"
-        },
-        "name": "workloadsGroup"
-      },
-      {
-        "type": 12,
-        "content": {
-          "version": "NotebookGroup/1.0",
-          "groupType": "editable",
-          "items": [
-            {
-              "type": 1,
-              "content": {
-                "json": "# Logs\r\n\r\nBy default when an application logs to **STDOUT** or **STDERR** the message will be captured by Azure Container Insights and ingested into Log Analytics. \r\n\r\n"
-              },
-              "name": "vdiOverview"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID\r\n| join kind=inner\r\n(KubePodInventory |project ContainerID, Name, ServiceName, ControllerName) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName, LogEntry, TimeGenerated\r\n| summarize count() by ServiceName\r\n| order by count_",
-                "size": 0,
-                "title": "Log Count by Pod",
-                "timeContextFromParameter": "Timerange",
-                "queryType": 0,
-                "resourceType": "microsoft.containerservice/managedclusters",
-                "crossComponentResources": [
-                  "{AKSCluster}"
-                ],
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "count_",
-                      "formatter": 8,
-                      "formatOptions": {
-                        "palette": "greenRed",
-                        "compositeBarSettings": {
-                          "labelText": "",
-                          "columnSettings": []
-                        }
-                      },
-                      "numberFormat": {
-                        "unit": 17,
-                        "options": {
-                          "style": "decimal"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "customWidth": "40",
-              "name": "query - 1"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "ContainerLog\r\n| join kind=inner\r\n(KubePodInventory |project ContainerID, Name, ServiceName, ControllerName) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, bin(TimeGenerated, 10m)",
-                "size": 0,
-                "title": "Log Count by Pod",
-                "timeContextFromParameter": "Timerange",
-                "queryType": 0,
-                "resourceType": "microsoft.containerservice/managedclusters",
-                "crossComponentResources": [
-                  "{AKSCluster}"
-                ],
-                "visualization": "linechart",
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "count_",
-                      "formatter": 0,
-                      "numberFormat": {
-                        "unit": 17,
-                        "options": {
-                          "style": "decimal"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "customWidth": "60",
-              "name": "query - 1 - Copy"
-            },
-            {
-              "type": 1,
-              "content": {
-                "json": "# Pod Logs\r\n\r\nLogs should be structured and any multi-line log messages should appear in a single `LogEntry` row. \r\n\r\n- **ServiceName**: The name of the controller (e.g. deployment)\r\n- **Investigate Errors**: To Investigate issues use the `open in search` button in the top right corner of the Log Output Panel.",
-                "style": "info"
-              },
-              "customWidth": "20",
-              "name": "text - 4"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "ContainerLog\r\n| project ContainerID, LogEntry, TimeGenerated, _ResourceId\r\n| join kind=inner\r\n(KubePodInventory |project ContainerID, Name, ServiceName, ControllerName) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, LogEntry, _ResourceId\r\n| order by count_",
-                "size": 0,
-                "showAnalytics": true,
-                "title": "Log Count by Pod Log Output",
-                "timeContextFromParameter": "Timerange",
-                "queryType": 0,
-                "resourceType": "microsoft.containerservice/managedclusters",
-                "crossComponentResources": [
-                  "{AKSCluster}"
-                ],
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "LogEntry",
-                      "formatter": 0,
-                      "formatOptions": {
-                        "customColumnWidthSetting": "50%"
-                      }
-                    },
-                    {
-                      "columnMatch": "count_",
-                      "formatter": 0,
-                      "numberFormat": {
-                        "unit": 17,
-                        "options": {
-                          "style": "decimal"
-                        }
-                      }
-                    }
-                  ],
-                  "rowLimit": 2000,
-                  "filter": true
-                }
-              },
-              "customWidth": "80",
-              "name": "query - 1 - Copy"
-            }
-          ]
-        },
-        "conditionalVisibility": {
-          "parameterName": "selectedTab",
-          "comparison": "isEqualTo",
-          "value": "logs"
-        },
-        "name": "logGroup"
-      },
-      {
-        "type": 12,
-        "content": {
-          "version": "NotebookGroup/1.0",
-          "groupType": "editable",
-          "items": [
-            {
-              "type": 1,
-              "content": {
-                "json": "# Nodes\r\n\r\nNodes in Kubernetes are the Virtual Machines where the containers will run. If the Nodes are unhealthy or there's not enough nodes available it will impact workloads running in the cluster. "
-              },
-              "name": "vdiOverview"
-            },
-            {
-              "type": 10,
-              "content": {
-                "chartId": "workbookd3a2514f-1058-46f7-ad25-c4948b34c8a9",
-                "version": "MetricsItem/2.0",
-                "size": 0,
-                "chartType": 2,
-                "resourceType": "microsoft.containerservice/managedclusters",
-                "metricScope": 0,
-                "resourceParameter": "AKSCluster",
-                "resourceIds": [
-                  "{AKSCluster}"
-                ],
-                "timeContextFromParameter": "Timerange",
-                "timeContext": {
-                  "durationMs": 0
+                  "customWidth": "50",
+                  "name": "query - 1"
                 },
-                "metrics": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "InsightsMetrics\r\n| where Name == \"kube_deployment_status_replicas_ready\"\r\n| extend Details = parse_json(Tags)\r\n| project Deployment = Details.deployment, Namespace = Details.k8sNamespace, Requested = toint(Details.spec_replicas), Available = toint(Details.status_replicas_available),   TimeGenerated\r\n| summarize count( toint(Available) == 0 ) by tostring(Deployment), bin(TimeGenerated, 5m)",
+                    "size": 0,
+                    "aggregation": 5,
+                    "title": "Deployments with 0 available Replicas",
+                    "timeContextFromParameter": "Timerange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.containerservice/managedclusters",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "visualization": "timechart"
+                  },
+                  "customWidth": "50",
+                  "name": "query - 1 - Copy"
+                }
+              ]
+            },
+            "name": "deploymentGroup",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "title": "Pods",
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "KubePodInventory\r\n| where PodStatus !in (\"Running\", \"Succeeded\")\r\n| project TimeGenerated, Name, _ResourceId, ContainerStatus, Namespace, PodStatus, ControllerName\r\n| summarize count() by ControllerName, bin(TimeGenerated, 10m)",
+                    "size": 0,
+                    "title": "Pod - Non Running State",
+                    "noDataMessage": "No pods are in a non-running state",
+                    "noDataMessageStyle": 3,
+                    "timeContextFromParameter": "Timerange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.containerservice/managedclusters",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "visualization": "linechart"
+                  },
+                  "customWidth": "50",
+                  "name": "Pod - Non Running State"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "KubePodInventory\r\n| where PodStatus !in (\"Running\", \"Succeeded\")\r\n| project TimeGenerated, Name, _ResourceId, ContainerStatus, Namespace, PodStatus, ControllerName\r\n| summarize count() by ControllerName, PodStatus, ContainerStatus\r\n| order by count_",
+                    "size": 0,
+                    "title": "Pod - Non Running State",
+                    "noDataMessage": "No pods are in a non-running state",
+                    "noDataMessageStyle": 3,
+                    "timeContextFromParameter": "Timerange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.containerservice/managedclusters",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "visualization": "table",
+                    "gridSettings": {
+                      "filter": true
+                    }
+                  },
+                  "customWidth": "50",
+                  "name": "Pod - Non Running State - Copy"
+                }
+              ]
+            },
+            "name": "podGroups",
+            "styleSettings": {
+              "showBorder": true
+            }
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "workloads"
+      },
+      "name": "workloadsGroup"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "# Logs\r\n\r\nBy default when an application logs to **STDOUT** or **STDERR** the message will be captured by Azure Container Insights and ingested into Log Analytics. \r\n\r\n"
+            },
+            "name": "vdiOverview"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID\r\n| join kind=inner\r\n(KubePodInventory |project ContainerID, Name, ServiceName, ControllerName) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName, LogEntry, TimeGenerated\r\n| summarize count() by ServiceName\r\n| order by count_",
+              "size": 0,
+              "title": "Log Count by Pod",
+              "timeContextFromParameter": "Timerange",
+              "exportFieldName": "ServiceName",
+              "exportParameterName": "ServiceName",
+              "exportDefaultValue": "empty",
+              "queryType": 0,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "gridSettings": {
+                "formatters": [
                   {
-                    "namespace": "microsoft.containerservice/managedclusters",
-                    "metric": "microsoft.containerservice/managedclusters-Nodes-kube_node_status_condition",
-                    "aggregation": 4,
-                    "splitBy": null,
-                    "columnName": "Nodes"
+                    "columnMatch": "count_",
+                    "formatter": 8,
+                    "formatOptions": {
+                      "palette": "greenRed",
+                      "compositeBarSettings": {
+                        "labelText": "",
+                        "columnSettings": []
+                      }
+                    },
+                    "numberFormat": {
+                      "unit": 17,
+                      "options": {
+                        "style": "decimal"
+                      }
+                    }
                   }
                 ],
-                "title": "Node Count by Cluster",
-                "filters": [
+                "filter": true
+              }
+            },
+            "customWidth": "40",
+            "name": "query - 1"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "ContainerLog\r\n| join kind=inner\r\n(KubePodInventory |project ContainerID, Name, ServiceName, ControllerName) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, bin(TimeGenerated, 10m)",
+              "size": 0,
+              "title": "Log Count by Pod",
+              "timeContextFromParameter": "Timerange",
+              "queryType": 0,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "visualization": "linechart",
+              "gridSettings": {
+                "formatters": [
                   {
-                    "id": "1",
-                    "key": "status2",
-                    "operator": 0,
-                    "values": [
-                      "Ready",
-                      "NotReady",
-                      "Unknown"
-                    ]
+                    "columnMatch": "count_",
+                    "formatter": 0,
+                    "numberFormat": {
+                      "unit": 17,
+                      "options": {
+                        "style": "decimal"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "customWidth": "60",
+            "name": "query - 1 - Copy"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "# Pod Logs\r\n\r\nLogs should be structured and any multi-line log messages should appear in a single `LogEntry` row. \r\n\r\n- **ServiceName**: The name of the controller (e.g. deployment)\r\n- **Investigate Errors**: To Investigate issues use the `open in search` button in the top right corner of the Log Output Panel.\r\n\r\n> **Note:** Select a ServiceName in the `Log Count by Pod` panel above to filter the logs to just that service. ",
+              "style": "info"
+            },
+            "customWidth": "20",
+            "name": "text - 4"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "ContainerLog\r\n| project ContainerID, LogEntry, TimeGenerated, _ResourceId\r\n| join kind=inner\r\n(KubePodInventory |project ContainerID, Name, ServiceName, ControllerName) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, LogEntry, _ResourceId\r\n| order by count_",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Log Count by Pod Log Output",
+              "timeContextFromParameter": "Timerange",
+              "queryType": 0,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "LogEntry",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "50%"
+                    }
+                  },
+                  {
+                    "columnMatch": "count_",
+                    "formatter": 0,
+                    "numberFormat": {
+                      "unit": 17,
+                      "options": {
+                        "style": "decimal"
+                      }
+                    }
                   }
                 ],
-                "gridSettings": {
-                  "formatters": [
-                    {
-                      "columnMatch": "Subscription",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Name",
-                      "formatter": 13,
-                      "formatOptions": {
-                        "linkTarget": "Resource"
-                      }
-                    },
-                    {
-                      "columnMatch": "microsoft.containerservice/managedclusters-Nodes (PREVIEW)-node_cpu_usage_percentage Timeline",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "microsoft.containerservice/managedclusters-Nodes (PREVIEW)-node_cpu_usage_percentage",
-                      "formatter": 1,
-                      "numberFormat": {
-                        "unit": 1,
-                        "options": null
-                      }
-                    },
-                    {
-                      "columnMatch": "microsoft.containerservice/managedclusters-Nodes (PREVIEW)-node_memory_working_set_percentage Timeline",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "microsoft.containerservice/managedclusters-Nodes (PREVIEW)-node_memory_working_set_percentage",
-                      "formatter": 1,
-                      "numberFormat": {
-                        "unit": 1,
-                        "options": null
-                      }
-                    },
-                    {
-                      "columnMatch": ".*\\/CPU Usage Percentage$",
-                      "formatter": 1
-                    },
-                    {
-                      "columnMatch": "microsoft.containerservice/managedclusters-Nodes-kube_node_status_condition Timeline",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "microsoft.containerservice/managedclusters-Nodes-kube_node_status_condition",
-                      "formatter": 1,
-                      "numberFormat": {
-                        "unit": 0,
-                        "options": null
-                      }
-                    },
-                    {
-                      "columnMatch": ".*\\/Statuses for various node conditions$",
-                      "formatter": 1
-                    },
-                    {
-                      "columnMatch": "Nodes Timeline",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Nodes",
-                      "formatter": 1,
-                      "numberFormat": {
-                        "unit": 0,
-                        "options": null
-                      }
-                    },
-                    {
-                      "columnMatch": "Metric",
-                      "formatter": 1
-                    },
-                    {
-                      "columnMatch": "Aggregation",
-                      "formatter": 5
-                    },
-                    {
-                      "columnMatch": "Value",
-                      "formatter": 1
-                    },
-                    {
-                      "columnMatch": "Timeline",
-                      "formatter": 9
-                    }
-                  ],
-                  "rowLimit": 10000,
-                  "labelSettings": [
-                    {
-                      "columnId": "Subscription",
-                      "label": "Subscription"
-                    }
+                "rowLimit": 5000,
+                "filter": true
+              }
+            },
+            "customWidth": "80",
+            "name": "query - 1 - Copy"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "logs"
+      },
+      "name": "logGroup"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "# Nodes\r\n\r\nNodes in Kubernetes are the Virtual Machines where the containers will run. If the Nodes are unhealthy or there's not enough nodes available it will impact workloads running in the cluster. "
+            },
+            "name": "vdiOverview"
+          },
+          {
+            "type": 10,
+            "content": {
+              "chartId": "workbookd3a2514f-1058-46f7-ad25-c4948b34c8a9",
+              "version": "MetricsItem/2.0",
+              "size": 0,
+              "chartType": 2,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "metricScope": 0,
+              "resourceParameter": "AKSCluster",
+              "resourceIds": [
+                "{AKSCluster}"
+              ],
+              "timeContextFromParameter": "Timerange",
+              "timeContext": {
+                "durationMs": 86400000
+              },
+              "metrics": [
+                {
+                  "namespace": "microsoft.containerservice/managedclusters",
+                  "metric": "microsoft.containerservice/managedclusters-Nodes-kube_node_status_condition",
+                  "aggregation": 4,
+                  "splitBy": null,
+                  "columnName": "Nodes"
+                }
+              ],
+              "title": "Node Count by Cluster",
+              "filters": [
+                {
+                  "id": "1",
+                  "key": "status2",
+                  "operator": 0,
+                  "values": [
+                    "Ready",
+                    "NotReady",
+                    "Unknown"
                   ]
                 }
-              },
-              "customWidth": "40",
-              "name": "metric - 2 - Copy - Copy"
-            },
-            {
-              "type": 3,
-              "content": {
-                "version": "KqlItem/1.0",
-                "query": "KubeNodeInventory\r\n| where Status != \"Ready\"\r\n| project TimeGenerated, Status, _ResourceId, Computer\r\n| order by TimeGenerated",
-                "size": 0,
-                "title": "Unhealthy Nodes",
-                "noDataMessage": "All nodes are healthy",
-                "noDataMessageStyle": 3,
-                "timeContextFromParameter": "Timerange",
-                "showRefreshButton": true,
-                "queryType": 0,
-                "resourceType": "microsoft.containerservice/managedclusters",
-                "crossComponentResources": [
-                  "{AKSCluster}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "Subscription",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Name",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": "Resource"
+                    }
+                  },
+                  {
+                    "columnMatch": "microsoft.containerservice/managedclusters-Nodes (PREVIEW)-node_cpu_usage_percentage Timeline",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "microsoft.containerservice/managedclusters-Nodes (PREVIEW)-node_cpu_usage_percentage",
+                    "formatter": 1,
+                    "numberFormat": {
+                      "unit": 1,
+                      "options": null
+                    }
+                  },
+                  {
+                    "columnMatch": "microsoft.containerservice/managedclusters-Nodes (PREVIEW)-node_memory_working_set_percentage Timeline",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "microsoft.containerservice/managedclusters-Nodes (PREVIEW)-node_memory_working_set_percentage",
+                    "formatter": 1,
+                    "numberFormat": {
+                      "unit": 1,
+                      "options": null
+                    }
+                  },
+                  {
+                    "columnMatch": ".*\\/CPU Usage Percentage$",
+                    "formatter": 1
+                  },
+                  {
+                    "columnMatch": "microsoft.containerservice/managedclusters-Nodes-kube_node_status_condition Timeline",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "microsoft.containerservice/managedclusters-Nodes-kube_node_status_condition",
+                    "formatter": 1,
+                    "numberFormat": {
+                      "unit": 0,
+                      "options": null
+                    }
+                  },
+                  {
+                    "columnMatch": ".*\\/Statuses for various node conditions$",
+                    "formatter": 1
+                  },
+                  {
+                    "columnMatch": "Nodes Timeline",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Nodes",
+                    "formatter": 1,
+                    "numberFormat": {
+                      "unit": 0,
+                      "options": null
+                    }
+                  },
+                  {
+                    "columnMatch": "Metric",
+                    "formatter": 1
+                  },
+                  {
+                    "columnMatch": "Aggregation",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "Value",
+                    "formatter": 1
+                  },
+                  {
+                    "columnMatch": "Timeline",
+                    "formatter": 9
+                  }
                 ],
-                "visualization": "table"
+                "rowLimit": 10000,
+                "labelSettings": [
+                  {
+                    "columnId": "Subscription",
+                    "label": "Subscription"
+                  }
+                ]
+              }
+            },
+            "customWidth": "40",
+            "name": "metric - 2 - Copy - Copy"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "KubeNodeInventory\r\n| where Status != \"Ready\"\r\n| project TimeGenerated, Status, _ResourceId, Computer\r\n| order by TimeGenerated",
+              "size": 0,
+              "title": "Unhealthy Nodes",
+              "noDataMessage": "All nodes are healthy",
+              "noDataMessageStyle": 3,
+              "timeContextFromParameter": "Timerange",
+              "showRefreshButton": true,
+              "queryType": 0,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "visualization": "table"
+            },
+            "customWidth": "50",
+            "name": "query - 1 - Copy"
+          },
+          {
+            "type": 1,
+            "content": {
+              "json": "## Cluster Autoscaling\r\n\r\nIf your cluster has autoscaling enabled it will scale out the Nodes dynamically. \r\n\r\n> This panel only works if the Cluster Autoscaler diagnostic logging is enabled. \r\n\r\n- **unschedulable**: This is referring to Pods who can't start due to resource constraints (a trigger to scale)\r\n- **No expansion options**: The NodePool can't scale anymore (max scale size).\r\n- **Requested scale-up **: Autoscaling triggered (request sent to VMSS)\r\n",
+              "style": "info"
+            },
+            "customWidth": "20",
+            "name": "text - 4"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "AzureDiagnostics\r\n| where Category == \"cluster-autoscaler\"\r\n| where log_s has \"is unschedulable\" or log_s has \"No expansion options\" or log_s has \"newNodes\" or log_s has \"unneeded\" or log_s has \"removal\" or log_s has \"unregistered nodes present\" or log_s has \"Unschedulable pods are very new, waiting one iteration for more\" or log_s has \"Best option to resize\" or log_s has \"Estimated\" or log_s has \"Requested scale-up\" or log_s has \"increase scale set\"\r\n\r\n  \r\n \r\n  \r\n| project TimeGenerated, log_s\r\n\r\n",
+              "size": 0,
+              "title": "Cluster Autoscaling",
+              "noDataMessage": "Ensure the correct Log Analytics Workspace is selected. If empty, there's no scaling events. ",
+              "timeContext": {
+                "durationMs": 1800000
               },
-              "customWidth": "50",
-              "name": "query - 1 - Copy"
-            }
-          ]
-        },
-        "conditionalVisibility": {
-          "parameterName": "selectedTab",
-          "comparison": "isEqualTo",
-          "value": "nodes"
-        },
-        "name": "nodeGroup"
-      }
-    ],
-    "fallbackResourceIds": [
-      "azure monitor"
-    ],
-    "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
-  }
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{LogAnalyticsWorkspace}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "log_s",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "80%"
+                    }
+                  }
+                ],
+                "rowLimit": 5000,
+                "filter": true
+              }
+            },
+            "customWidth": "80",
+            "name": "query - 3"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "nodes"
+      },
+      "name": "nodeGroup"
+    }
+  ],
+  "fallbackResourceIds": [
+    "azure monitor"
+  ],
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}

@@ -1305,7 +1305,7 @@
                       "filter": true
                     }
                   },
-                  "customWidth": "50",
+                  "customWidth": "55",
                   "name": "query - 1"
                 },
                 {
@@ -1324,7 +1324,7 @@
                     ],
                     "visualization": "timechart"
                   },
-                  "customWidth": "50",
+                  "customWidth": "45",
                   "name": "query - 1 - Copy"
                 }
               ]
@@ -1358,7 +1358,7 @@
                     ],
                     "visualization": "linechart"
                   },
-                  "customWidth": "50",
+                  "customWidth": "45",
                   "name": "Pod - Non Running State"
                 },
                 {
@@ -1381,7 +1381,7 @@
                       "filter": true
                     }
                   },
-                  "customWidth": "50",
+                  "customWidth": "55",
                   "name": "Pod - Non Running State - Copy"
                 }
               ]
@@ -1417,7 +1417,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID\r\n| join kind=inner\r\n(KubePodInventory |project ContainerID, Name, ServiceName, ControllerName) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName, LogEntry, TimeGenerated\r\n| summarize count() by ServiceName\r\n| order by count_",
+              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=inner\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName, LogEntry, TimeGenerated\r\n| summarize count() by ServiceName\r\n| order by count_",
               "size": 0,
               "title": "Log Count by Pod",
               "timeContextFromParameter": "Timerange",
@@ -1453,13 +1453,13 @@
               }
             },
             "customWidth": "40",
-            "name": "query - 1"
+            "name": "query - 1 - Copy"
           },
           {
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "ContainerLog\r\n| join kind=inner\r\n(KubePodInventory |project ContainerID, Name, ServiceName, ControllerName) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, bin(TimeGenerated, 10m)",
+              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=inner\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, bin(TimeGenerated, 10m)",
               "size": 0,
               "title": "Log Count by Pod",
               "timeContextFromParameter": "Timerange",
@@ -1500,7 +1500,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "ContainerLog\r\n| project ContainerID, LogEntry, TimeGenerated, _ResourceId\r\n| join kind=inner\r\n(KubePodInventory |project ContainerID, Name, ServiceName, ControllerName) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, LogEntry, _ResourceId\r\n| order by count_",
+              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=inner\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, LogEntry, _ResourceId\r\n| order by count_",
               "size": 0,
               "showAnalytics": true,
               "title": "Log Count by Pod Log Output",
@@ -1574,7 +1574,7 @@
               ],
               "timeContextFromParameter": "Timerange",
               "timeContext": {
-                "durationMs": 86400000
+                "durationMs": 0
               },
               "metrics": [
                 {
@@ -1700,7 +1700,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "KubeNodeInventory\r\n| where Status != \"Ready\"\r\n| project TimeGenerated, Status, _ResourceId, Computer\r\n| order by TimeGenerated",
+              "query": "KubeNodeInventory\r\n| where Status !in ( \"Ready\", \"\")\r\n| project TimeGenerated, Status, Computer\r\n| order by TimeGenerated",
               "size": 0,
               "title": "Unhealthy Nodes",
               "noDataMessage": "All nodes are healthy",
@@ -1714,7 +1714,7 @@
               ],
               "visualization": "table"
             },
-            "customWidth": "50",
+            "customWidth": "60",
             "name": "query - 1 - Copy"
           },
           {
@@ -1730,13 +1730,11 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "AzureDiagnostics\r\n| where Category == \"cluster-autoscaler\"\r\n| where log_s has \"is unschedulable\" or log_s has \"No expansion options\" or log_s has \"newNodes\" or log_s has \"unneeded\" or log_s has \"removal\" or log_s has \"unregistered nodes present\" or log_s has \"Unschedulable pods are very new, waiting one iteration for more\" or log_s has \"Best option to resize\" or log_s has \"Estimated\" or log_s has \"Requested scale-up\" or log_s has \"increase scale set\"\r\n\r\n  \r\n \r\n  \r\n| project TimeGenerated, log_s\r\n\r\n",
+              "query": "AzureDiagnostics\r\n| where Category == \"cluster-autoscaler\"\r\n| extend trimmed_log = trim_start(@\"^.*?\\]\\s+\", log_s)\r\n| where trimmed_log has \"is unschedulable\" or trimmed_log has \"No expansion options\"  or trimmed_log has \"unneeded\" or trimmed_log has \"removal\" or trimmed_log has \"unregistered nodes present\" or trimmed_log has \"Unschedulable pods are very new, waiting one iteration for more\" or trimmed_log has \"Best option to resize\" or trimmed_log has \"Estimated\" or trimmed_log has \"Requested scale-up\" or trimmed_log has \"increase scale set\" \r\n| project TimeGenerated, trimmed_log\r\n\r\n",
               "size": 0,
               "title": "Cluster Autoscaling",
               "noDataMessage": "Ensure the correct Log Analytics Workspace is selected. If empty, there's no scaling events. ",
-              "timeContext": {
-                "durationMs": 1800000
-              },
+              "timeContextFromParameter": "Timerange",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
               "crossComponentResources": [
@@ -1744,6 +1742,13 @@
               ],
               "gridSettings": {
                 "formatters": [
+                  {
+                    "columnMatch": "trimmed_log",
+                    "formatter": 0,
+                    "formatOptions": {
+                      "customColumnWidthSetting": "80%"
+                    }
+                  },
                   {
                     "columnMatch": "log_s",
                     "formatter": 0,

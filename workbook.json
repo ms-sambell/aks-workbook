@@ -1417,7 +1417,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=inner\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName, LogEntry, TimeGenerated\r\n| summarize count() by ServiceName\r\n| order by count_",
+              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=innerunique\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName, LogEntry, TimeGenerated\r\n| summarize count() by ServiceName\r\n| order by count_",
               "size": 0,
               "title": "Log Count by Pod",
               "timeContextFromParameter": "Timerange",
@@ -1459,7 +1459,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=inner\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, bin(TimeGenerated, 10m)",
+              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=innerunique\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, bin(TimeGenerated, 10m)",
               "size": 0,
               "title": "Log Count by Pod",
               "timeContextFromParameter": "Timerange",
@@ -1500,7 +1500,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=inner\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, LogEntry, _ResourceId\r\n| order by count_",
+              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=innerunique\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, LogEntry, _ResourceId\r\n| order by count_",
               "size": 0,
               "showAnalytics": true,
               "title": "Log Count by Pod Log Output",

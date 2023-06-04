@@ -9,6 +9,7 @@ This repository contains an Azure Workbook which can be used to monitor Azure Ku
 ### Traffic Light
 
 ![traffic-light](.images/trafficlight.png)
+
 ### Failed Events
 
 ![events](.images/failed-events.png)
@@ -34,9 +35,12 @@ To use this Workbook you need to:
 ## To Do
 
 - Optimise queries
-- Add request/limit analysis
-- Create a namespace parameter to filter with
+- Fix the workload view
+- Fix up the cluster autoscaler view and add timeseries
 
+## Contributing
+
+Please feel free to raise a pull request to contribute to this repository, raise an issue or feature request.
 ## Documentation
 
 - [AKS Troubleshooting Guide](https://learn.microsoft.com/en-us/troubleshoot/azure/azure-kubernetes/welcome-azure-kubernetes)

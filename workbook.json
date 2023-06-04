@@ -4,7 +4,7 @@
     {
       "type": 1,
       "content": {
-        "json": "[ Add Company Logo ]\r\n\r\n# Azure Kubernetes Service - Example\r\n\r\nThis dashboard provides insights into [ Customer ] Azure Kubernetes Environment. This workbook is an example to help show the capabilities for monitoring AKS in Azure. \r\n\r\n\r\n> To use this workbook you must have Container Insights enabled on your cluster.\r\n\r\n### Documentation\r\n\r\n- [Azure Service Status](https://status.azure.com/en-us/status)\r\n- [AKS Monitoring Guide](https://learn.microsoft.com/en-us/azure/aks/monitor-aks)\r\n- [Availability Testing](https://github.com/ms-sambell/app-insights-private-availability-tests)\r\n- [Container Insight Queries](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-log-query)\r\n- [AKS Troubleshooting Guide](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-troubleshoot)\r\n- [AKS Troubleshooting - error messages](https://learn.microsoft.com/en-us/troubleshoot/azure/azure-kubernetes/welcome-azure-kubernetes)"
+        "json": "[ Add Company Logo ]\r\n\r\n# Azure Kubernetes Service - Example\r\n\r\nThis dashboard provides insights into [ Customer ] Azure Kubernetes Environment. This workbook is an example to help show the capabilities for monitoring AKS in Azure. \r\n\r\n\r\n> To use this workbook you must have Container Insights enabled on your cluster.\r\n\r\n### Documentation\r\n\r\n- [Azure Service Status](https://status.azure.com/en-us/status)\r\n- [AKS Monitoring Guide](https://learn.microsoft.com/en-us/azure/aks/monitor-aks)\r\n- [Availability Testing](https://github.com/ms-sambell/app-insights-private-availability-tests)\r\n- [Container Insight Queries](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-log-query)\r\n- [AKS Troubleshooting Guide](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-troubleshoot)\r\n- [AKS Troubleshooting - error messages](https://learn.microsoft.com/en-us/troubleshoot/azure/azure-kubernetes/welcome-azure-kubernetes)\r\n- [AKS Triage guide](https://learn.microsoft.com/en-us/azure/architecture/operator-guides/aks/aks-triage-practices)"
       },
       "name": "workbookSummary"
     },
@@ -12,9 +12,6 @@
       "type": 9,
       "content": {
         "version": "KqlParameterItem/1.0",
-        "crossComponentResources": [
-          "{Subscriptions}"
-        ],
         "parameters": [
           {
             "id": "ee72d127-d97a-43a7-aece-1426d6affd22",
@@ -112,10 +109,7 @@
               ]
             },
             "queryType": 1,
-            "resourceType": "microsoft.resourcegraph/resources",
-            "value": [
-              "/subscriptions/892bcc8c-4ef7-4891-a300-6162ad690045/resourceGroups/clustertestsolutio_group/providers/Microsoft.ContainerService/managedClusters/clustertestsolutions"
-            ]
+            "resourceType": "microsoft.resourcegraph/resources"
           },
           {
             "id": "61033ad9-9d1d-4c58-b27d-818c8fb38697",
@@ -138,11 +132,54 @@
             "value": [
               "/subscriptions/892bcc8c-4ef7-4891-a300-6162ad690045/resourceGroups/DefaultResourceGroup-EAU/providers/Microsoft.OperationalInsights/workspaces/DefaultWorkspace-892bcc8c-4ef7-4891-a300-6162ad690045-EAU"
             ]
+          },
+          {
+            "id": "a6a84698-f7d5-4d4e-89d7-b230e97e0b8a",
+            "version": "KqlParameterItem/1.0",
+            "name": "Namespace",
+            "type": 5,
+            "multiSelect": true,
+            "quote": "'",
+            "delimiter": ",",
+            "query": "KubePodInventory\r\n| project Namespace\r\n| distinct Namespace",
+            "crossComponentResources": [
+              "{LogAnalyticsWorkspace}"
+            ],
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::all"
+              ],
+              "showDefault": false
+            },
+            "timeContext": {
+              "durationMs": 0
+            },
+            "timeContextFromParameter": "Timerange",
+            "queryType": 0,
+            "resourceType": "microsoft.operationalinsights/workspaces",
+            "value": [
+              "value::all"
+            ]
+          },
+          {
+            "id": "131de291-6eb8-4e69-ba89-681b5cecebc4",
+            "version": "KqlParameterItem/1.0",
+            "name": "resourceType",
+            "type": 7,
+            "query": "{\"version\":\"1.0.0\",\"content\":\"\\\"{AKSCluster:resourcetype}\\\"\",\"transformers\":null}",
+            "isHiddenWhenLocked": true,
+            "typeSettings": {
+              "additionalResourceOptions": [
+                "value::1"
+              ],
+              "showDefault": false
+            },
+            "queryType": 8,
+            "value": "microsoft.containerservice/managedclusters"
           }
         ],
         "style": "pills",
-        "queryType": 1,
-        "resourceType": "microsoft.resourcegraph/resources"
+        "queryType": 8
       },
       "name": "parameters - 7"
     },
@@ -207,6 +244,22 @@
             "linkLabel": "Changes",
             "subTarget": "changes",
             "style": "link"
+          },
+          {
+            "id": "befd38d5-fb56-43f2-b56d-287b0fc5f2ab",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Container Optimizer",
+            "subTarget": "containerOpt",
+            "style": "link"
+          },
+          {
+            "id": "cb2806a5-599f-4b2b-951d-b2043b52cf9f",
+            "cellValue": "selectedTab",
+            "linkTarget": "parameter",
+            "linkLabel": "Cluster Config",
+            "subTarget": "config",
+            "style": "link"
           }
         ]
       },
@@ -221,7 +274,7 @@
           {
             "type": 1,
             "content": {
-              "json": "# Traffic Light"
+              "json": "# Traffic Light\r\n\r\nAn traffic light view of the health of the selected AKS clusters. The health of a cluster is determined by [resource health](https://learn.microsoft.com/en-us/azure/service-health/resource-health-checks-resource-types#microsoftcontainerservicemanagedclusters)."
             },
             "name": "text - 0"
           },
@@ -345,6 +398,397 @@
           {
             "type": 1,
             "content": {
+              "json": "# Cluster Configuration\r\n\r\nProvides context on the cluster(s) configuration during an incident. "
+            },
+            "name": "text - 3"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "\tresources\r\n\t| where type == \"microsoft.containerservice/managedclusters\"\r\n\t| extend  AKSname=name,location=location,AKSRG=tolower(resourceGroup),Sku=tostring(sku.name),Tier=tostring(sku.tier),AgentPoolProfiles=properties.agentPoolProfiles\r\n    | extend nodePoolCount = array_length(AgentPoolProfiles)\r\n\t| mvexpand AgentPoolProfiles\r\n\t| extend ProfileName = tostring(AgentPoolProfiles.name) ,mode=AgentPoolProfiles.mode,AutoScaleEnabled = AgentPoolProfiles.enableAutoScaling ,SpotVM=AgentPoolProfiles.scaleSetPriority,  VMSize=tostring(AgentPoolProfiles.vmSize),minCount=tostring(AgentPoolProfiles.minCount),maxCount=tostring(AgentPoolProfiles.maxCount) , nodeCount=tostring(AgentPoolProfiles.['count']), maxPods=tostring(AgentPoolProfiles.maxPods)\r\n    | project id,ProfileName,Sku,Tier,mode,AutoScaleEnabled,SpotVM, VMSize,nodeCount,minCount,maxCount, AKSname, maxPods, nodePoolCount\r\n    | extend SpotVM = iff(mode == \"System\", \"NotApplicable\", SpotVM)\r\n    | extend SystemNodeSize = iff(VMSize matches regex \"([2-4])\", \"Rightsized\", \"Oversized\")\r\n    | extend SystemPoolSizing = iff((mode == \"System\" and nodePoolCount > 1 ), SystemNodeSize, \"\")\r\n    | project id,ProfileName,Sku,Tier,mode,SystemPoolSizing, AutoScaleEnabled,SpotVM, VMSize, nodeCount,minCount,maxCount, AKSname, maxPods\r\n\r\n",
+              "size": 2,
+              "title": "AKS Cluster Audit",
+              "noDataMessage": "You have no AKS clusters!",
+              "showExportToExcel": true,
+              "queryType": 1,
+              "resourceType": "{AKSCluster}",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "$gen_group",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": "Resource",
+                      "showIcon": true
+                    }
+                  },
+                  {
+                    "columnMatch": "id",
+                    "formatter": 5,
+                    "formatOptions": {
+                      "linkTarget": "Resource",
+                      "subTarget": "Insights"
+                    }
+                  },
+                  {
+                    "columnMatch": "mode",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "System",
+                          "representation": "Gear",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "User",
+                          "representation": "Person",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "success",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "SystemPoolSizing",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "representation": "more",
+                          "text": ""
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Oversized",
+                          "representation": "3",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Rightsized",
+                          "representation": "success",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "more",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "AutoScaleEnabled",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "true",
+                          "representation": "success",
+                          "text": ""
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "disabled",
+                          "text": ""
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "SpotVM",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "is Empty",
+                          "representation": "3",
+                          "text": "{0}{1}Not Spot VM"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "NotApplicable",
+                          "representation": "more",
+                          "text": ""
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "success",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "AKSname",
+                    "formatter": 5
+                  }
+                ],
+                "filter": true,
+                "hierarchySettings": {
+                  "treeType": 1,
+                  "groupBy": [
+                    "id"
+                  ],
+                  "expandTopLevel": true
+                }
+              },
+              "sortBy": []
+            },
+            "conditionalVisibility": {
+              "parameterName": "show",
+              "comparison": "isEqualTo",
+              "value": "never"
+            },
+            "name": "full-aks-summary"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "KubePodInventory\r\n| where ContainerStatus == \"running\"\r\n| where isnotempty(Name)\r\n| distinct Name, Computer, ClusterId\r\n| extend NodePool = extract(@\"^(\\w+-\\w+)\", 0, Computer)\r\n| extend NodePool = trim_start(\"aks-\", NodePool)\r\n| summarize count(Name) by Computer, NodePool, ClusterId\r\n| summarize round(avg(count_Name), 0) by NodePool, ClusterId",
+              "size": 0,
+              "queryType": 0,
+              "resourceType": "microsoft.operationalinsights/workspaces",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ]
+            },
+            "conditionalVisibility": {
+              "parameterName": "nervershow",
+              "comparison": "isEqualTo",
+              "value": "true"
+            },
+            "name": "podCounts"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "{\"version\":\"Merge/1.0\",\"merges\":[{\"id\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\",\"mergeType\":\"rightouter\",\"leftTable\":\"full-aks-summary\",\"rightTable\":\"podCounts\",\"leftColumn\":\"ProfileName\",\"rightColumn\":\"NodePool\"}],\"projectRename\":[{\"originalName\":\"[full-aks-summary].id\",\"mergedName\":\"id\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].ProfileName\",\"mergedName\":\"ProfileName\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].Sku\",\"mergedName\":\"Sku\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].Tier\",\"mergedName\":\"Tier\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].mode\",\"mergedName\":\"mode\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].SystemPoolSizing\",\"mergedName\":\"SystemPoolSizing\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].AutoScaleEnabled\",\"mergedName\":\"AutoScaleEnabled\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].SpotVM\",\"mergedName\":\"SpotVM\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].VMSize\",\"mergedName\":\"VMSize\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].nodeCount\",\"mergedName\":\"nodeCount\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].minCount\",\"mergedName\":\"minCount\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].maxCount\",\"mergedName\":\"maxCount\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].AKSname\",\"mergedName\":\"AKSname\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[podCounts].NodePool\",\"mergedName\":\"NodePool\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[full-aks-summary].maxPods\",\"mergedName\":\"maxPods\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[podCounts].ClusterId\",\"mergedName\":\"ClusterId\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"},{\"originalName\":\"[podCounts].avg_count_Name\",\"mergedName\":\"avg_count_Name\",\"fromId\":\"12a02ca8-4356-49d8-90bc-ded8373c1068\"}]}",
+              "size": 3,
+              "title": "AKS Cluster Review",
+              "queryType": 7,
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "$gen_group",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": "Resource",
+                      "showIcon": true
+                    }
+                  },
+                  {
+                    "columnMatch": "AKSname",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": "Resource",
+                      "showIcon": true
+                    }
+                  },
+                  {
+                    "columnMatch": "id",
+                    "formatter": 5,
+                    "formatOptions": {
+                      "linkTarget": "Resource"
+                    }
+                  },
+                  {
+                    "columnMatch": "mode",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "System",
+                          "representation": "Gear",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "User",
+                          "representation": "Person",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "unknown",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "SystemPoolSizing",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "representation": "more",
+                          "text": ""
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Oversized",
+                          "representation": "3",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "Rightsized",
+                          "representation": "success",
+                          "text": "{0}{1}"
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "success",
+                          "text": "{0}{1}"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "AutoScaleEnabled",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "==",
+                          "thresholdValue": "true",
+                          "representation": "success",
+                          "text": ""
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "disabled",
+                          "text": ""
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "SpotVM",
+                    "formatter": 18,
+                    "formatOptions": {
+                      "thresholdsOptions": "icons",
+                      "thresholdsGrid": [
+                        {
+                          "operator": "is Empty",
+                          "representation": "error",
+                          "text": "{0}{1}Not Spot VM"
+                        },
+                        {
+                          "operator": "==",
+                          "thresholdValue": "NotApplicable",
+                          "representation": "more",
+                          "text": ""
+                        },
+                        {
+                          "operator": "Default",
+                          "thresholdValue": null,
+                          "representation": "success",
+                          "text": ""
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "columnMatch": "nodeCount",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "NodePool",
+                    "formatter": 5
+                  },
+                  {
+                    "columnMatch": "ClusterId",
+                    "formatter": 5,
+                    "formatOptions": {
+                      "linkTarget": "Resource"
+                    }
+                  },
+                  {
+                    "columnMatch": "Group",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": "Resource",
+                      "showIcon": true
+                    }
+                  }
+                ],
+                "filter": true,
+                "hierarchySettings": {
+                  "treeType": 1,
+                  "groupBy": [
+                    "AKSname"
+                  ],
+                  "expandTopLevel": true
+                },
+                "labelSettings": [
+                  {
+                    "columnId": "minCount",
+                    "label": "nodeMinCount"
+                  },
+                  {
+                    "columnId": "maxCount",
+                    "label": "nodeMaxCount"
+                  },
+                  {
+                    "columnId": "avg_count_Name",
+                    "label": "avgPods"
+                  }
+                ]
+              }
+            },
+            "name": "query - 9"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "config"
+      },
+      "name": "clusterConfigGroup"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
               "json": "# Changes (Kube Audit)\r\n\r\nKubernetes captures audit logs for all activities in the cluster. However, it needs to be explicitly enabled. Once these logs are enabled and published to a Log Analytics workspace they can be queried. \r\n\r\nThe audit logs show who deleted, patched or created new resources. Which is incredibly useful when troubleshooting issues. \r\n\r\n\r\n\r\n\r\n> The query below depends on the `Log Analytics Workspace` parameter specified for this parameter. \r\n\r\n- **[Kubernetes Audit Logs - Azure](https://learn.microsoft.com/en-us/azure/aks/monitor-aks-reference#resource-logs)**"
             },
             "name": "text - 0"
@@ -356,7 +800,8 @@
               "query": "AzureDiagnostics\r\n| where Category in (\"kube-audit-admin\", \"kube-audit\")\r\n| project TimeGenerated, ResourceId, log_s\r\n| extend eventMessage = parse_json(log_s)\r\n| extend K8Event = parse_json(eventMessage.objectRef)\r\n| project TimeGenerated, eventMessage.verb, K8Event.name, username = eventMessage.user.username, K8Event, eventMessage\r\n| where eventMessage_verb !in (\"post\", \"get\")\r\n| where username !in (\"aksService\", \"aksProblemDetector\", \"\")\r\n| where username !has \"system:\"\r\n| project TimeGenerated, Action = eventMessage.verb, Resource = K8Event.name, Namespace = K8Event.namespace, KubernetesResource = K8Event.resource, Username = eventMessage.user.username\r\n\r\n",
               "size": 0,
               "title": "Kubernetes Audit Logs",
-              "noDataMessage": "No user initiated events happened within the cluster (check the log analytics workspace selected is correct). ",
+              "noDataMessage": "No user initiated events happened within the cluster (Note: Ensure the log analytics workspace selected is correct). ",
+              "noDataMessageStyle": 3,
               "timeContextFromParameter": "Timerange",
               "queryType": 0,
               "resourceType": "microsoft.operationalinsights/workspaces",
@@ -386,11 +831,11 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "{\"version\":\"ChangeAnalysis/1.0\",\"changeLevels\":[\"Important\",\"Normal\"]}",
+              "query": "{\"version\":\"ChangeAnalysis/1.0\",\"changeLevels\":[\"Important\",\"Normal\",\"Noisy\"]}",
               "size": 0,
               "showAnalytics": true,
               "title": "AKS Cluster Changes",
-              "noDataMessage": "No changes made to the AKS cluster",
+              "noDataMessage": "No changes made to the AKS cluster in the past 7 days",
               "noDataMessageStyle": 3,
               "timeContext": {
                 "durationMs": 604800000
@@ -1102,9 +1547,9 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| summarize count() by ObjectKind",
+              "query": "let regex = @\"^([a-z]+(?:-[a-z]+)*)\";\r\nKubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| where ObjectKind == \"Pod\"\r\n| where Namespace in ({Namespace}) or \"{Namespace}\" contains \"kube-system\"\r\n| extend ControllerName = extract(@\"^([a-z]+(?:-[a-z]+)*)-\", 1, Name)\r\n| summarize Events = count() by ControllerName\r\n| limit 10",
               "size": 0,
-              "title": "Failed Events by Object Kind",
+              "title": "Failed Events by Pod Controller (Top 10)",
               "noDataMessage": "No events detected",
               "noDataMessageStyle": 3,
               "timeContextFromParameter": "Timerange",
@@ -1114,7 +1559,7 @@
               "crossComponentResources": [
                 "{AKSCluster}"
               ],
-              "visualization": "piechart",
+              "visualization": "table",
               "gridSettings": {
                 "formatters": [
                   {
@@ -1126,18 +1571,17 @@
                     }
                   }
                 ],
-                "rowLimit": 2000,
-                "filter": true
+                "rowLimit": 2000
               }
             },
             "customWidth": "33",
-            "name": "eventsByObject"
+            "name": "failedEventsByController"
           },
           {
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| summarize count() by Reason",
+              "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| where Namespace in ({Namespace}) or \"{Namespace}\" contains \"kube-system\"\r\n| summarize count() by Reason",
               "size": 0,
               "title": "Failed Events by Reason",
               "noDataMessage": "No events detected",
@@ -1172,7 +1616,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| summarize count() by Namespace",
+              "query": "KubeEvents\r\n| project Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| where Namespace in ({Namespace}) or \"{Namespace}\" contains \"kube-system\"\r\n| summarize count() by Namespace",
               "size": 0,
               "title": "Failed Events by Namespace",
               "noDataMessage": "No events detected",
@@ -1204,10 +1648,120 @@
             "name": "eventsByNamespace"
           },
           {
+            "type": 9,
+            "content": {
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "75c813b7-60a3-4660-96a4-08e51aadf765",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "eventView",
+                  "label": "Event Information",
+                  "type": 10,
+                  "isRequired": true,
+                  "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n    { \\\"value\\\":\\\"detailed\\\", \\\"label\\\":\\\"Detailed\\\", \\\"selected\\\":true },\\r\\n    { \\\"value\\\":\\\"timeseries\\\", \\\"label\\\":\\\"Timeseries\\\" }\\r\\n]\",\"transformers\":null}",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "queryType": 8
+                }
+              ],
+              "style": "pills",
+              "queryType": 8
+            },
+            "name": "eventViewParams"
+          },
+          {
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "KubeEvents\r\n| project TimeGenerated, Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| order by TimeGenerated",
+              "query": "KubeEvents\r\n| project TimeGenerated, Reason, Namespace\r\n| where Namespace in ({Namespace}) or \"{Namespace}\" contains \"kube-system\"\r\n| summarize count() by Reason, bin(TimeGenerated, 10m)\r\n//| order by TimeGenerated",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Failed Events Detailed View",
+              "noDataMessage": "No events detected",
+              "noDataMessageStyle": 3,
+              "timeContextFromParameter": "Timerange",
+              "showRefreshButton": true,
+              "queryType": 0,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "visualization": "timechart",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "_ResourceId",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": null,
+                      "showIcon": true
+                    }
+                  }
+                ],
+                "rowLimit": 4000,
+                "filter": true
+              }
+            },
+            "customWidth": "50",
+            "conditionalVisibility": {
+              "parameterName": "eventView",
+              "comparison": "isEqualTo",
+              "value": "timeseries"
+            },
+            "name": "detailed-events-view - Copy"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "KubeEvents\r\n| project TimeGenerated, Name, Namespace\r\n| where Namespace in ({Namespace}) or \"{Namespace}\" contains \"kube-system\"\r\n| summarize count() by Name, bin(TimeGenerated, 10m)\r\n//| order by TimeGenerated",
+              "size": 0,
+              "showAnalytics": true,
+              "title": "Failed Events Detailed View",
+              "noDataMessage": "No events detected",
+              "noDataMessageStyle": 3,
+              "timeContextFromParameter": "Timerange",
+              "showRefreshButton": true,
+              "queryType": 0,
+              "resourceType": "microsoft.containerservice/managedclusters",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "visualization": "timechart",
+              "gridSettings": {
+                "formatters": [
+                  {
+                    "columnMatch": "_ResourceId",
+                    "formatter": 13,
+                    "formatOptions": {
+                      "linkTarget": null,
+                      "showIcon": true
+                    }
+                  }
+                ],
+                "rowLimit": 4000,
+                "filter": true
+              }
+            },
+            "customWidth": "50",
+            "conditionalVisibility": {
+              "parameterName": "eventView",
+              "comparison": "isEqualTo",
+              "value": "timeseries"
+            },
+            "name": "detailed-events-view - Copy - Copy"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "KubeEvents\r\n| project TimeGenerated, Name, Namespace , ObjectKind, Reason, Message, Computer//, KubeEventType, _ResourceId\r\n| where Namespace in ({Namespace}) or \"{Namespace}\" contains \"kube-system\"\r\n| order by TimeGenerated",
               "size": 0,
               "showAnalytics": true,
               "title": "Failed Events Detailed View",
@@ -1235,7 +1789,12 @@
                 "filter": true
               }
             },
-            "name": "eventsOutput - Copy"
+            "conditionalVisibility": {
+              "parameterName": "eventView",
+              "comparison": "isEqualTo",
+              "value": "detailed"
+            },
+            "name": "detailed-events-view"
           }
         ]
       },
@@ -1245,6 +1804,412 @@
         "value": "events"
       },
       "name": "eventsGroup"
+    },
+    {
+      "type": 12,
+      "content": {
+        "version": "NotebookGroup/1.0",
+        "groupType": "editable",
+        "items": [
+          {
+            "type": 1,
+            "content": {
+              "json": "## Select a container to see recommended requests and limits\r\n\r\nThis analyzer shows containers with excessive cpu/memory limits and requests. Each tile can represent multiple containers with the same spec. (ex: If deployment A creates 100 identical pods, each with a container C1 and C2, then there will be a single tile for all C1 containers and a single tile for all C2 containers).\r\n\r\nContainers with set limits and requests are color-coded in a gradient from green to red. Tiles are colored like so:\r\n- 🟢 green -> well set limits and requests  \r\n- 🔴 red -> excessive limits or requests\r\n- ❕ gray -> unset limits or requests\r\n\r\n> **Note: Content on this page is based on the built-in Cluster Optimisation workbook. ** "
+            },
+            "name": "smart detectors combined workbook - requests and limits text explanation"
+          },
+          {
+            "type": 11,
+            "content": {
+              "version": "LinkItem/1.0",
+              "style": "tabs",
+              "links": [
+                {
+                  "id": "74b938cf-fd98-4d3c-a280-729bc0ced2dd",
+                  "cellValue": "limitrequest_containerselection",
+                  "linkTarget": "parameter",
+                  "linkLabel": "All",
+                  "subTarget": "all",
+                  "style": "link"
+                },
+                {
+                  "id": "fef55d21-802c-43e8-9930-9bef73f4d6b1",
+                  "cellValue": "limitrequest_containerselection",
+                  "linkTarget": "parameter",
+                  "linkLabel": "Limits or requests not set",
+                  "subTarget": "notset",
+                  "style": "link"
+                },
+                {
+                  "id": "ba69d35d-1cd9-4919-bd4f-d4d63e2605d4",
+                  "cellValue": "limitrequest_containerselection",
+                  "linkTarget": "parameter",
+                  "linkLabel": "Limits and requests set",
+                  "subTarget": "set",
+                  "style": "link"
+                }
+              ]
+            },
+            "name": "smart detectors combined workbook - limits and requests tabs"
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let queryStartTime = {Timerange:start};\r\nlet queryEndTime = {Timerange:end};\r\nlet tollerance = 1;\r\nlet tonullneg1 = (arg0:real) { iff(arg0 == -1., real(null), arg0) };\r\nlet NODE_LIMITS = Perf\r\n    | where TimeGenerated > ago(10m)\r\n    | where CounterName == \"memoryAllocatableBytes\" or CounterName == \"cpuAllocatableNanoCores\"\r\n    | as T\r\n    | where CounterName == \"memoryAllocatableBytes\"\r\n    | summarize memoryAllocatableBytes = any(CounterValue) by Computer\r\n    | join (\r\n        T \r\n        | where CounterName == \"cpuAllocatableNanoCores\" \r\n        | summarize cpuAllocatableNanoCores = any(CounterValue) by Computer\r\n        )\r\n        on Computer\r\n    | project memoryAllocatableBytes, cpuAllocatableNanoCores, Computer;\r\n//\r\nlet perfdata = materialize(Perf\r\n    | project TimeGenerated, ObjectName, InstanceName, _ResourceId, CounterName, CounterValue, Computer\r\n    | where TimeGenerated >= queryStartTime and TimeGenerated <= queryEndTime\r\n    | where ObjectName == 'K8SContainer'\r\n    | where ((CounterName == 'memoryLimitBytes' or CounterName == 'memoryRequestBytes' or CounterName == 'cpuLimitNanoCores' or CounterName == 'cpuRequestNanoCores') and TimeGenerated > (queryEndTime - 1h)) or CounterName == 'memoryRssBytes' or CounterName == 'cpuUsageNanoCores'\r\n    | extend ClusterName = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[8], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[4], split(InstanceName, '/')[0])))\r\n    | extend PodUid = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[9], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[5], split(InstanceName, '/')[1])))\r\n    | extend ContainerName = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[10], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[6], split(InstanceName, '/')[2])))\r\n    | where isnotempty(PodUid)\r\n    | extend ResourceName = strcat(ClusterName, '/', PodUid, '/', ContainerName)\r\n    | join kind = inner NODE_LIMITS on Computer\r\n    | join kind = inner (\r\n        KubePodInventory\r\n        | where TimeGenerated >= queryEndTime - 10m and TimeGenerated <= queryEndTime\r\n        | summarize any(Name, Namespace, ControllerName, ControllerKind, ClusterId) by PodUid\r\n        | project PodName = any_Name, ControllerNameMaybe = any_ControllerName, ControllerKindMaybe = any_ControllerKind, Namespace = any_Namespace, PodUid\r\n        ) on PodUid\r\n    | project-away PodUid1\r\n    // not all pods have controllers\r\n    | extend ControllerName = iff(isnull(ControllerNameMaybe) or ControllerNameMaybe == \"\", strcat(PodName, \" (dummy value)\"), ControllerNameMaybe)\r\n    | extend ControllerKind = iff(isnull(ControllerKindMaybe) or ControllerKindMaybe == \"\", \"single pod (dummy value)\", ControllerKindMaybe)\r\n    | project-away ControllerKindMaybe, ControllerNameMaybe\r\n    //\r\n    | extend hasMemLimit = iff(CounterValue == memoryAllocatableBytes, -1., CounterValue) // no limit check\r\n    | extend hasMemRequest = iff(CounterValue == memoryAllocatableBytes, -1., CounterValue) // no request check\r\n    | extend hasCpuRequest = iff(CounterValue == cpuAllocatableNanoCores, -1., CounterValue) // no request check\r\n    | extend hasCpuLimit = iff(CounterValue == cpuAllocatableNanoCores, -1., CounterValue) // no limit check\r\n    | summarize measurement_counts = count(), _max = max(CounterValue), p90=percentile(CounterValue, 90), p99=percentile(CounterValue, 99), measurementEndTime = max(TimeGenerated), measurementStartTime = min(TimeGenerated),\r\n        hasMemLimit=min(hasMemLimit), hasMemRequest=min(hasMemRequest), hasCpuRequest=min(hasCpuRequest), hasCpuLimit=min(hasCpuLimit) by ClusterName, Namespace, ControllerName, ControllerKind, ContainerName, CounterName\r\n    );\r\n//\r\nperfdata\r\n| where CounterName == 'memoryLimitBytes'\r\n| project memLimitCount = measurement_counts, memLimitVal = tonullneg1(hasMemLimit), ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n//\r\n| join kind = fullouter (\r\n    perfdata\r\n    | where CounterName == 'memoryRequestBytes'\r\n    | project memRequestCount = measurement_counts, memRequestVal = tonullneg1(hasMemRequest), ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n    )\r\n    on ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project-away ClusterName1, Namespace1, ControllerName1, ControllerKind1, ContainerName1\r\n//\r\n| join kind = fullouter (\r\n    perfdata\r\n    | where CounterName == 'memoryRssBytes'\r\n    | project mem_measurement_counts = measurement_counts, mem_max = _max, mem_p90=p90, mem_p99=p99, measurementEndTime = measurementEndTime, measurementStartTime = measurementStartTime, ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n    )\r\n    on ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project-away ClusterName1, Namespace1, ControllerName1, ControllerKind1, ContainerName1\r\n//\r\n| join kind = fullouter (\r\n    perfdata\r\n    | where CounterName == 'cpuRequestNanoCores'\r\n    | project cpuRequestCount = measurement_counts, cpuRequestVal = tonullneg1(hasCpuRequest), ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n    )\r\n    on ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project-away ClusterName1, Namespace1, ControllerName1, ControllerKind1, ContainerName1\r\n//\r\n| join kind = fullouter (\r\n    perfdata\r\n    | where CounterName == 'cpuLimitNanoCores'\r\n    | project cpuLimitCount = measurement_counts, cpuLimitVal = tonullneg1(hasCpuLimit), ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n    )\r\n    on ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project-away ClusterName1, Namespace1, ControllerName1, ControllerKind1, ContainerName1\r\n//\r\n| join kind = fullouter (\r\n    perfdata\r\n    | where CounterName == 'cpuUsageNanoCores'\r\n    | project cpu_measurement_counts = measurement_counts, cpu_max = _max, cpu_p90=p90, cpu_p99=p99, ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n    )\r\n    on ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project-away ClusterName1, Namespace1, ControllerName1, ControllerKind1, ContainerName1\r\n//\r\n| where cpuLimitCount > 2 and memLimitCount > 2 and mem_measurement_counts >= 1 and cpu_measurement_counts >= 1 // ensure there are enough measurements\r\n| extend suggestedMemRequest = mem_p99 * 1.5\r\n| extend suggestedMemLimit = mem_p99 * 3\r\n| extend suggestedCpuRequest = cpu_p99 * 1.5 + 5\r\n| extend suggestedCpuLimit = cpu_p99 * 3 + 5\r\n| extend diffMemRequest = abs(suggestedMemRequest - memRequestVal) / suggestedMemRequest\r\n| extend diffMemLimit = abs(suggestedMemLimit - memLimitVal) / suggestedMemLimit\r\n| extend diffCpuRequest = abs(suggestedCpuRequest - cpuRequestVal) / suggestedCpuRequest\r\n| extend diffCpuLimit = abs(suggestedCpuLimit - cpuLimitVal) / suggestedCpuLimit\r\n| extend distAboveTolerance = max_of(diffMemRequest / tollerance, diffMemLimit / tollerance, diffCpuRequest / tollerance, diffCpuLimit / tollerance)\r\n| extend hasnulls = (isnull(cpuRequestVal) or isnull(cpuLimitVal) or isnull(memRequestVal) or isnull(memLimitVal))\r\n| extend colorKey = iff(hasnulls, real(null), log10(distAboveTolerance))\r\n| where Namespace in ({Namespace}) or \"{Namespace}\" contains \"kube-system\"\r\n| where (not(hasnulls) and (\"{limitrequest_containerselection}\" == \"set\" or \"{limitrequest_containerselection}\" == \"all\")) or (hasnulls and (\"{limitrequest_containerselection}\" == \"notset\" or \"{limitrequest_containerselection}\" == \"all\"))\r\n| extend containerKey = base64_encode_tostring(strcat(ClusterName, \"/\", Namespace, \"/\", ControllerKind, \"/\", ControllerName, \"/\", ContainerName))\r\n| project ClusterName, Namespace, ControllerName, ControllerKind, ContainerName, memRequestVal, memLimitVal, mem_p90, mem_p99, mem_max, cpuRequestVal, cpuLimitVal, cpu_p90, cpu_p99, cpu_max, suggestedMemRequest, suggestedMemLimit, suggestedCpuRequest, suggestedCpuLimit, distAboveTolerance, colorKey, containerKey\r\n//\r\n| extend memRequestVal_final = iff(isnull(memRequestVal), -1.0, memRequestVal), memLimitVal_final = iff(isnull(memLimitVal), -1.0, memLimitVal), cpuRequestVal_final = iff(isnull(cpuRequestVal), -1.0, cpuRequestVal), cpuLimitVal_final = iff(isnull(cpuLimitVal), -1.0, cpuLimitVal)\r\n| project-away memRequestVal, memLimitVal, cpuRequestVal, cpuLimitVal\r\n| project-rename memRequestVal = memRequestVal_final, memLimitVal = memLimitVal_final, cpuRequestVal = cpuRequestVal_final, cpuLimitVal = cpuLimitVal_final",
+              "size": 3,
+              "showAnalytics": true,
+              "title": "Request/Limit Unoptimality",
+              "noDataMessage": "No pods found in cluster or selected namespace. Is monitoring enabled?",
+              "exportedParameters": [
+                {
+                  "fieldName": "containerKey",
+                  "parameterName": "limitrequestcontainerKey",
+                  "defaultValue": "////"
+                },
+                {
+                  "fieldName": "memRequestVal",
+                  "parameterName": "limitrequest_memRequestVal",
+                  "parameterType": 1,
+                  "defaultValue": "-1"
+                },
+                {
+                  "fieldName": "memLimitVal",
+                  "parameterName": "limitrequest_memLimitVal",
+                  "parameterType": 1,
+                  "defaultValue": "-1"
+                },
+                {
+                  "fieldName": "cpuRequestVal",
+                  "parameterName": "limitrequest_cpuRequestVal",
+                  "parameterType": 1,
+                  "defaultValue": "-1"
+                },
+                {
+                  "fieldName": "cpuLimitVal",
+                  "parameterName": "limitrequest_cpuLimitVal",
+                  "parameterType": 1,
+                  "defaultValue": "-1"
+                },
+                {
+                  "fieldName": "suggestedMemRequest",
+                  "parameterName": "limitrequest_suggestedMemRequest",
+                  "parameterType": 1,
+                  "defaultValue": "-1"
+                },
+                {
+                  "fieldName": "suggestedMemLimit",
+                  "parameterName": "limitrequest_suggestedMemLimit",
+                  "parameterType": 1,
+                  "defaultValue": "-1"
+                },
+                {
+                  "fieldName": "suggestedCpuRequest",
+                  "parameterName": "limitrequest_suggestedCpuRequest",
+                  "parameterType": 1,
+                  "defaultValue": "-1"
+                },
+                {
+                  "fieldName": "suggestedCpuLimit",
+                  "parameterName": "limitrequest_suggestedCpuLimit",
+                  "parameterType": 1,
+                  "defaultValue": "-1"
+                },
+                {
+                  "fieldName": "ClusterName",
+                  "parameterName": "limitrequest_selected_ClusterName",
+                  "parameterType": 1,
+                  "defaultValue": " "
+                },
+                {
+                  "fieldName": "Namespace",
+                  "parameterName": "limitrequest_selected_Namespace",
+                  "parameterType": 1,
+                  "defaultValue": " "
+                },
+                {
+                  "fieldName": "ControllerKind",
+                  "parameterName": "limitrequest_selected_ControllerKind",
+                  "parameterType": 1,
+                  "defaultValue": " "
+                },
+                {
+                  "fieldName": "ControllerName",
+                  "parameterName": "limitrequest_selected_ControllerName",
+                  "parameterType": 1,
+                  "defaultValue": " "
+                },
+                {
+                  "fieldName": "ContainerName",
+                  "parameterName": "limitrequest_selected_ContainerName",
+                  "parameterType": 1,
+                  "defaultValue": " "
+                }
+              ],
+              "queryType": 0,
+              "resourceType": "{resourceType}",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "visualization": "graph",
+              "tileSettings": {
+                "showBorder": false,
+                "titleContent": {
+                  "columnMatch": "ClusterName",
+                  "formatter": 1
+                },
+                "leftContent": {
+                  "columnMatch": "mem_p90",
+                  "formatter": 12,
+                  "formatOptions": {
+                    "palette": "auto"
+                  },
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "maximumSignificantDigits": 3,
+                      "maximumFractionDigits": 2
+                    }
+                  }
+                }
+              },
+              "graphSettings": {
+                "type": 2,
+                "topContent": {
+                  "columnMatch": "ContainerName",
+                  "formatter": 1
+                },
+                "centerContent": {
+                  "columnMatch": "distAboveTolerance",
+                  "formatter": 1,
+                  "numberFormat": {
+                    "unit": 17,
+                    "options": {
+                      "style": "decimal",
+                      "maximumFractionDigits": 2,
+                      "maximumSignificantDigits": 3
+                    }
+                  }
+                },
+                "bottomContent": {
+                  "columnMatch": "ControllerName"
+                },
+                "nodeIdField": "ControllerName",
+                "graphOrientation": 3,
+                "showOrientationToggles": false,
+                "nodeSize": null,
+                "staticNodeSize": 100,
+                "colorSettings": {
+                  "nodeColorField": "colorKey",
+                  "type": 4,
+                  "heatmapPalette": "greenRed",
+                  "heatmapMin": null,
+                  "heatmapMax": null,
+                  "emptyValueColor": "gray"
+                },
+                "hivesMargin": 8
+              },
+              "mapSettings": {
+                "locInfo": "LatLong",
+                "sizeSettings": "mem_p90",
+                "sizeAggregation": "Sum",
+                "legendMetric": "mem_p90",
+                "legendAggregation": "Sum",
+                "itemColorSettings": {
+                  "type": "heatmap",
+                  "colorAggregation": "Sum",
+                  "nodeColorField": "mem_p90",
+                  "heatmapPalette": "greenRed"
+                }
+              }
+            },
+            "customWidth": "49",
+            "name": "smart detectors combined workbook - limits and requests select container",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let queryStartTime = {Timerange:start};\r\nlet queryEndTime = {Timerange:end};\r\nlet targetContainer = base64_decode_tostring(\"{limitrequestcontainerKey}\");\r\nlet T = Perf\r\n| project TimeGenerated, ObjectName, InstanceName, _ResourceId, CounterName, CounterValue, Computer\r\n| where TimeGenerated >= queryStartTime and TimeGenerated <= queryEndTime\r\n| where ObjectName == 'K8SContainer'\r\n| where CounterName == 'memoryRssBytes'\r\n| extend ClusterName = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[8], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[4], split(InstanceName, '/')[0])))\r\n| where ClusterName == \"{limitrequest_selected_ClusterName}\"\r\n| extend PodUid = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[9], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[5], split(InstanceName, '/')[1])))\r\n| extend ContainerName = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[10], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[6], split(InstanceName, '/')[2])))\r\n| where ContainerName == \"{limitrequest_selected_ContainerName}\"\r\n| where isnotempty(PodUid)\r\n| extend ResourceName = strcat(ClusterName, '/', PodUid, '/', ContainerName)\r\n| join kind = inner (\r\nKubePodInventory\r\n| where TimeGenerated >= queryEndTime - 10m and TimeGenerated <= queryEndTime\r\n| project-rename PodName = Name, ControllerNameMaybe = ControllerName, ControllerKindMaybe = ControllerKind\r\n| where ControllerNameMaybe == \"{limitrequest_selected_ControllerName}\"\r\n| where ControllerKindMaybe == \"{limitrequest_selected_ControllerKind}\"\r\n| where Namespace == \"{limitrequest_selected_Namespace}\"\r\n| summarize PodName = any(PodName), Namespace = any(Namespace), ControllerNameMaybe = any(ControllerNameMaybe), ControllerKindMaybe = any(ControllerKindMaybe) by PodUid\r\n)\r\non PodUid\r\n| project-away PodUid1\r\n// not all pods have controllers\r\n| extend ControllerName = iff(isnull(ControllerNameMaybe) or ControllerNameMaybe == \"\", strcat(PodName, \" (dummy value)\"), ControllerNameMaybe)\r\n| extend ControllerKind = iff(isnull(ControllerKindMaybe) or ControllerKindMaybe == \"\", \"single pod (dummy value)\", ControllerKindMaybe)\r\n| project-away ControllerKindMaybe, ControllerNameMaybe\r\n| extend containerKey = strcat(ClusterName, \"/\", Namespace, \"/\", ControllerKind, \"/\", ControllerName, \"/\", ContainerName)\r\n| where containerKey == targetContainer;\r\n//\r\nlet firstTime = toscalar(T | summarize firstTime = min(TimeGenerated));\r\nT\r\n| extend memoryRequestBytes = toreal(\"{limitrequest_memRequestVal}\")\r\n| extend memoryLimitBytes = toreal(\"{limitrequest_memLimitVal}\")\r\n| extend cpuRequestVal = toreal(\"{limitrequest_cpuRequestVal}\")\r\n| extend cpuLimitVal = toreal(\"{limitrequest_cpuLimitVal}\")\r\n| extend suggestedMemRequest = toreal(\"{limitrequest_suggestedMemRequest}\")\r\n| extend suggestedMemLimit = toreal(\"{limitrequest_suggestedMemLimit}\")\r\n| extend suggestedCpuRequest = toreal(\"{limitrequest_suggestedCpuRequest}\")\r\n| extend suggestedCpuLimit = toreal(\"{limitrequest_suggestedCpuLimit}\")\r\n// | project ClusterName, Namespace, ControllerName, ContainerName, cpuRequestVal, suggestedCpuRequest, cpuLimitVal, suggestedCpuLimit, memRequestVal, suggestedMemRequest, memLimitVal, suggestedMemLimit\r\n// | project-rename current_cpu_request = cpuRequestVal, suggested_cpu_request = suggestedCpuRequest, current_cpu_limit = cpuLimitVal, suggested_cpu_limit = suggestedCpuLimit, current_memory_request = memRequestVal, suggested_mem_request = suggestedMemRequest, current_mem_limit = memLimitVal, suggested_mem_limit = suggestedMemLimit\r\n| project-rename memoryRssBytes = CounterValue\r\n| project TimeGenerated, memoryRssBytes, memoryRequestBytes, memoryLimitBytes, suggestedMemRequest, suggestedMemLimit\r\n//| make-series memoryRssBytes = max(memoryRssBytes) default=0, memoryRequestBytes = max(memoryRequestBytes) default=0, memoryLimitBytes = max(memoryLimitBytes) default=0, suggestedMemRequest = max(suggestedMemRequest) default=0, suggestedMemLimit = max(suggestedMemLimit) on TimeGenerated from queryStartTime to queryEndTime step (queryEndTime - queryStartTime) / 100\r\n| summarize memoryRssBytes = max(memoryRssBytes), current_request_raw = max(memoryRequestBytes), current_limit_raw = max(memoryLimitBytes), suggested_request = max(suggestedMemRequest), suggested_limit = max(suggestedMemLimit) by bin(TimeGenerated, (queryEndTime - firstTime) / 100)\r\n| extend current_request = iff(current_request_raw < 0, real(null), current_request_raw), current_limit = iff(current_limit_raw < 0, real(null), current_limit_raw)\r\n| project-away current_request_raw, current_limit_raw\r\n// | summarize min(TimeGenerated), max(TimeGenerated)",
+                    "size": 0,
+                    "aggregation": 3,
+                    "showAnalytics": true,
+                    "title": "Memory Usage (max) vs Request & Limit",
+                    "noDataMessage": "Select a container to see recommended requests and limits",
+                    "queryType": 0,
+                    "resourceType": "{resourceType}",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "visualization": "linechart",
+                    "gridSettings": {
+                      "sortBy": [
+                        {
+                          "itemKey": "TimeGenerated",
+                          "sortOrder": 1
+                        }
+                      ]
+                    },
+                    "sortBy": [
+                      {
+                        "itemKey": "TimeGenerated",
+                        "sortOrder": 1
+                      }
+                    ],
+                    "tileSettings": {
+                      "showBorder": false
+                    },
+                    "chartSettings": {
+                      "seriesLabelSettings": [
+                        {
+                          "seriesName": "memoryRssBytes",
+                          "label": "max memory usage (bytes)",
+                          "color": "blue"
+                        },
+                        {
+                          "seriesName": "current_request",
+                          "label": "current request",
+                          "color": "redBright"
+                        },
+                        {
+                          "seriesName": "current_limit",
+                          "label": "current limit",
+                          "color": "red"
+                        },
+                        {
+                          "seriesName": "suggested_request",
+                          "label": "suggested request",
+                          "color": "green"
+                        },
+                        {
+                          "seriesName": "suggested_limit",
+                          "label": "suggested limit",
+                          "color": "greenDark"
+                        }
+                      ]
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong"
+                    }
+                  },
+                  "customWidth": "100",
+                  "name": "smart detectors combined workbook - limits and requests memory chart"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "let queryStartTime = {Timerange:start};\r\nlet queryEndTime = {Timerange:end};\r\nlet targetContainer = base64_decode_tostring(\"{limitrequestcontainerKey}\");\r\nlet T = Perf\r\n| project TimeGenerated, ObjectName, InstanceName, _ResourceId, CounterName, CounterValue, Computer\r\n| where TimeGenerated >= queryStartTime and TimeGenerated <= queryEndTime\r\n| where ObjectName == 'K8SContainer'\r\n| where CounterName == 'cpuUsageNanoCores'\r\n| extend ClusterName = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[8], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[4], split(InstanceName, '/')[0])))\r\n| where ClusterName == \"{limitrequest_selected_ClusterName}\"\r\n| extend PodUid = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[9], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[5], split(InstanceName, '/')[1])))\r\n| extend ContainerName = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[10], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[6], split(InstanceName, '/')[2])))\r\n| where ContainerName == \"{limitrequest_selected_ContainerName}\"\r\n| where isnotempty(PodUid)\r\n| extend ResourceName = strcat(ClusterName, '/', PodUid, '/', ContainerName)\r\n| join kind = inner (\r\nKubePodInventory\r\n| where TimeGenerated >= queryEndTime - 10m and TimeGenerated <= queryEndTime\r\n| project-rename PodName = Name, ControllerNameMaybe = ControllerName, ControllerKindMaybe = ControllerKind\r\n| where ControllerNameMaybe == \"{limitrequest_selected_ControllerName}\"\r\n| where ControllerKindMaybe == \"{limitrequest_selected_ControllerKind}\"\r\n| where Namespace == \"{limitrequest_selected_Namespace}\"\r\n| summarize PodName = any(PodName), Namespace = any(Namespace), ControllerNameMaybe = any(ControllerNameMaybe), ControllerKindMaybe = any(ControllerKindMaybe) by PodUid\r\n)\r\non PodUid\r\n| project-away PodUid1\r\n// not all pods have controllers\r\n| extend ControllerName = iff(isnull(ControllerNameMaybe) or ControllerNameMaybe == \"\", strcat(PodName, \" (dummy value)\"), ControllerNameMaybe)\r\n| extend ControllerKind = iff(isnull(ControllerKindMaybe) or ControllerKindMaybe == \"\", \"single pod (dummy value)\", ControllerKindMaybe)\r\n| project-away ControllerKindMaybe, ControllerNameMaybe\r\n| extend containerKey = strcat(ClusterName, \"/\", Namespace, \"/\", ControllerKind, \"/\", ControllerName, \"/\", ContainerName)\r\n| where containerKey == targetContainer;\r\n//\r\nlet firstTime = toscalar(T | summarize firstTime = min(TimeGenerated));\r\nT\r\n| extend memoryRequestBytes = toreal(\"{limitrequest_memRequestVal}\")\r\n| extend memoryLimitBytes = toreal(\"{limitrequest_memLimitVal}\")\r\n| extend cpuRequestVal = toreal(\"{limitrequest_cpuRequestVal}\")\r\n| extend cpuLimitVal = toreal(\"{limitrequest_cpuLimitVal}\")\r\n| extend suggestedMemRequest = toreal(\"{limitrequest_suggestedMemRequest}\")\r\n| extend suggestedMemLimit = toreal(\"{limitrequest_suggestedMemLimit}\")\r\n| extend suggestedCpuRequest = toreal(\"{limitrequest_suggestedCpuRequest}\")\r\n| extend suggestedCpuLimit = toreal(\"{limitrequest_suggestedCpuLimit}\")\r\n// | project ClusterName, Namespace, ControllerName, ContainerName, cpuRequestVal, suggestedCpuRequest, cpuLimitVal, suggestedCpuLimit, memRequestVal, suggestedMemRequest, memLimitVal, suggestedMemLimit\r\n// | project-rename current_cpu_request = cpuRequestVal, suggested_cpu_request = suggestedCpuRequest, current_cpu_limit = cpuLimitVal, suggested_cpu_limit = suggestedCpuLimit, current_memory_request = memRequestVal, suggested_mem_request = suggestedMemRequest, current_mem_limit = memLimitVal, suggested_mem_limit = suggestedMemLimit\r\n| project-rename cpuUsageNanoCores = CounterValue\r\n| project TimeGenerated, cpuUsageNanoCores, cpuRequestVal, cpuLimitVal, suggestedCpuRequest, suggestedCpuLimit\r\n//| make-series memoryRssBytes = max(memoryRssBytes) default=0, memoryRequestBytes = max(memoryRequestBytes) default=0, memoryLimitBytes = max(memoryLimitBytes) default=0, suggestedMemRequest = max(suggestedMemRequest) default=0, suggestedMemLimit = max(suggestedMemLimit) on TimeGenerated from queryStartTime to queryEndTime step (queryEndTime - queryStartTime) / 100\r\n| summarize cpuUsageNanoCores = max(cpuUsageNanoCores), current_request_raw = max(cpuRequestVal), current_limit_raw = max(cpuLimitVal), suggested_request = max(suggestedCpuRequest), suggested_limit = max(suggestedCpuLimit) by bin(TimeGenerated, (queryEndTime - firstTime) / 100)\r\n| extend current_request = iff(current_request_raw < 0, real(null), current_request_raw), current_limit = iff(current_limit_raw < 0, real(null), current_limit_raw)\r\n| project-away current_request_raw, current_limit_raw\r\n// | summarize min(TimeGenerated), max(TimeGenerated)",
+                    "size": 0,
+                    "aggregation": 3,
+                    "showAnalytics": true,
+                    "title": "CPU Usage (max) vs Request & Limit",
+                    "noDataMessage": "Select a container to see recommended requests and limits",
+                    "queryType": 0,
+                    "resourceType": "{resourceType}",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "visualization": "linechart",
+                    "sortBy": [],
+                    "tileSettings": {
+                      "showBorder": false
+                    },
+                    "chartSettings": {
+                      "seriesLabelSettings": [
+                        {
+                          "seriesName": "cpuUsageNanoCores",
+                          "label": "max cpu usage (nanocores)",
+                          "color": "blue"
+                        },
+                        {
+                          "seriesName": "current_request",
+                          "label": "current request",
+                          "color": "redBright"
+                        },
+                        {
+                          "seriesName": "current_limit",
+                          "label": "current limit",
+                          "color": "red"
+                        },
+                        {
+                          "seriesName": "suggested_request",
+                          "label": "suggested request",
+                          "color": "green"
+                        },
+                        {
+                          "seriesName": "suggested_limit",
+                          "label": "suggested limit"
+                        },
+                        {
+                          "color": "greenDark"
+                        }
+                      ]
+                    },
+                    "mapSettings": {
+                      "locInfo": "LatLong"
+                    }
+                  },
+                  "customWidth": "100",
+                  "name": "smart detectors combined workbook - limits and requests cpu chart"
+                }
+              ]
+            },
+            "customWidth": "50",
+            "name": "smart detectors combined workbook - limits and requests chart group",
+            "styleSettings": {
+              "maxWidth": "50%"
+            }
+          },
+          {
+            "type": 3,
+            "content": {
+              "version": "KqlItem/1.0",
+              "query": "let queryEndTime = {Timerange:end};\r\nlet queryStartTime = queryEndTime - 20m;\r\nlet targetContainer = base64_decode_tostring(\"{limitrequestcontainerKey}\");\r\nlet convert_to_SI = (value:long) { \r\nlet num = case(\r\nvalue / 1000000000 >= 1, strcat(round(value / 1000000000.0, 1),'B'),\r\nvalue / 1000000 >= 1, strcat(round(value / 1000000.0, 1),'M'), \r\nvalue / 1000 >= 1, strcat(round(value / 1000.0, 1),'K'), \r\ntostring(value));\r\nnum\r\n};\r\nlet NODE_LIMITS = Perf\r\n| where TimeGenerated > ago(10m)\r\n| where CounterName == \"memoryAllocatableBytes\" or CounterName == \"cpuAllocatableNanoCores\"\r\n| as T\r\n| where CounterName == \"memoryAllocatableBytes\"\r\n| summarize memoryAllocatableBytes = any(CounterValue) by Computer\r\n| join (T \r\n| where CounterName == \"cpuAllocatableNanoCores\" \r\n| summarize cpuAllocatableNanoCores = any(CounterValue) by Computer\r\n)\r\non Computer\r\n| project memoryAllocatableBytes, cpuAllocatableNanoCores, Computer;\r\nlet perfdata = materialize(Perf\r\n| project TimeGenerated, ObjectName, InstanceName, _ResourceId, CounterName, CounterValue, Computer\r\n| where TimeGenerated >= queryStartTime and TimeGenerated <= queryEndTime\r\n| where ObjectName == 'K8SContainer'\r\n| where ((CounterName == 'memoryLimitBytes' or CounterName == 'memoryRequestBytes' or CounterName == 'cpuLimitNanoCores' or CounterName == 'cpuRequestNanoCores') and TimeGenerated > (queryEndTime - 1h)) or CounterName == 'memoryRssBytes' or CounterName == 'cpuUsageNanoCores'\r\n| extend ClusterName = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[8], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[4], split(InstanceName, '/')[0])))\r\n| extend PodUid = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[9], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[5], split(InstanceName, '/')[1])))\r\n| extend ContainerName = tostring(iff(InstanceName contains '/providers/{resourceType}', split(InstanceName, '/')[10], iff(InstanceName contains '/subscriptions/', split(InstanceName, '/')[6], split(InstanceName, '/')[2])))\r\n| where isnotempty(PodUid)\r\n| extend ResourceName = strcat(ClusterName, '/', PodUid, '/', ContainerName)\r\n| join kind = inner NODE_LIMITS on Computer\r\n| join kind = inner (\r\nKubePodInventory\r\n| where TimeGenerated >= queryEndTime - 10m and TimeGenerated <= queryEndTime\r\n| project-rename PodName = Name, ControllerNameMaybe = ControllerName, ControllerKindMaybe = ControllerKind\r\n| summarize by PodUid, PodName, Namespace, ControllerNameMaybe, ControllerKindMaybe\r\n)\r\non PodUid\r\n| project-away PodUid1\r\n// not all pods have controllers\r\n| extend ControllerName = iff(isnull(ControllerNameMaybe) or ControllerNameMaybe == \"\", strcat(PodName, \" (dummy value)\"), ControllerNameMaybe)\r\n| extend ControllerKind = iff(isnull(ControllerKindMaybe) or ControllerKindMaybe == \"\", \"single pod (dummy value)\", ControllerKindMaybe)\r\n| project-away ControllerKindMaybe, ControllerNameMaybe\r\n| extend containerKey = strcat(ClusterName, \"/\", Namespace, \"/\", ControllerKind, \"/\", ControllerName, \"/\", ContainerName)\r\n| where containerKey == targetContainer\r\n);\r\n//\r\nperfdata\r\n| where CounterName == 'memoryLimitBytes'\r\n| extend hasMemLimit = iff(CounterValue == memoryAllocatableBytes, real(null), CounterValue) // no limit check\r\n| summarize memLimitCount = count(), memLimitVal = max(hasMemLimit) by ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n//\r\n| join kind = fullouter (\r\nperfdata\r\n| where CounterName == 'memoryRequestBytes'\r\n| extend hasMemRequest = iff(CounterValue == memoryAllocatableBytes, real(null), CounterValue)  // no request check\r\n| summarize memRequestCount = count(), memRequestVal = max(hasMemRequest) by ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n)\r\non ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project-away ClusterName1, Namespace1, ControllerName1, ControllerKind1, ContainerName1\r\n//\r\n| join kind = fullouter (\r\nperfdata\r\n| where CounterName == 'memoryRssBytes'\r\n| summarize mem_measurement_counts = count(), mem_max = max(CounterValue), mem_p90=percentile(CounterValue, 90), mem_p99=percentile(CounterValue, 99), measurementEndTime = max(TimeGenerated), measurementStartTime = min(TimeGenerated)\r\nby ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project mem_measurement_counts, mem_max, mem_p90, mem_p99, measurementStartTime, measurementEndTime, ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n)\r\non ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project-away ClusterName1, Namespace1, ControllerName1, ControllerKind1, ContainerName1\r\n//\r\n| join kind = fullouter (\r\nperfdata\r\n| where CounterName == 'cpuRequestNanoCores'\r\n| extend hasCpuRequest = iff(CounterValue == cpuAllocatableNanoCores, real(null), CounterValue)  // no request check\r\n| summarize cpuRequestCount = count(), cpuRequestVal = max(hasCpuRequest) by ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n)\r\non ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project-away ClusterName1, Namespace1, ControllerName1, ControllerKind1, ContainerName1\r\n//\r\n| join kind = fullouter (\r\nperfdata\r\n| where CounterName == 'cpuLimitNanoCores'\r\n| extend hasCpuLimit = iff(CounterValue == cpuAllocatableNanoCores, real(null), CounterValue)  // no limit check\r\n| summarize cpuLimitCount = count(), cpuLimitVal = max(hasCpuLimit) by ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n)\r\non ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project-away ClusterName1, Namespace1, ControllerName1, ControllerKind1, ContainerName1\r\n//\r\n| join kind = fullouter (\r\nperfdata\r\n| where CounterName == 'cpuUsageNanoCores'\r\n| summarize cpu_measurement_counts = count(), cpu_max = max(CounterValue), cpu_p90=percentile(CounterValue, 90), cpu_p99=percentile(CounterValue, 99) by ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project cpu_measurement_counts, cpu_max, cpu_p90, cpu_p99, ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n)\r\non ClusterName, Namespace, ControllerName, ControllerKind, ContainerName\r\n| project-away ClusterName1, Namespace1, ControllerName1, ControllerKind1, ContainerName1\r\n//\r\n| where cpuLimitCount > 2 and memLimitCount > 2  // ensure there are enough measurements?\r\n| extend suggestedMemRequest = round(mem_p90 * 1.2, 1)\r\n| extend suggestedMemLimit = round(mem_p99 * 1.5, 1)\r\n| extend suggestedCpuRequest = round(cpu_p99 + 5, 1)\r\n| extend suggestedCpuLimit = round(cpu_p99 * 1.5 + 5, 1)\r\n| project ClusterName, Namespace, ControllerName, ContainerName, cpuRequestVal, suggestedCpuRequest, cpuLimitVal, suggestedCpuLimit, memRequestVal, suggestedMemRequest, memLimitVal, suggestedMemLimit\r\n| project-rename current_cpu_request_raw = cpuRequestVal, suggested_cpu_request = suggestedCpuRequest, current_cpu_limit_raw = cpuLimitVal, suggested_cpu_limit = suggestedCpuLimit, current_memory_request_raw = memRequestVal, suggested_mem_request = suggestedMemRequest, current_mem_limit_raw = memLimitVal, suggested_mem_limit = suggestedMemLimit\r\n//\r\n| extend current_cpu_request = iff(current_cpu_request_raw < 0, real(null), current_cpu_request_raw), current_cpu_limit = iff(current_cpu_limit_raw < 0, real(null), current_cpu_limit_raw), current_memory_request = iff(current_memory_request_raw < 0, real(null), current_memory_request_raw), current_mem_limit = iff(current_mem_limit_raw < 0, real(null), current_mem_limit_raw)\r\n| project-away current_cpu_request_raw, current_cpu_limit_raw, current_memory_request_raw, current_mem_limit_raw\r\n| project ClusterName, Namespace, ControllerName, ContainerName, current_cpu_request_nanocores=convert_to_SI(current_cpu_request), suggested_cpu_request_nanocores=convert_to_SI(suggested_cpu_request), current_cpu_limit_nanocores=convert_to_SI(current_cpu_limit), suggested_cpu_limit_nanocores=convert_to_SI(suggested_cpu_limit), current_memory_request_bytes=convert_to_SI(current_memory_request), suggested_mem_request_bytes=convert_to_SI(suggested_mem_request), current_mem_limit_bytes=convert_to_SI(current_mem_limit), suggested_mem_limit_bytes=convert_to_SI(suggested_mem_limit)",
+              "size": 4,
+              "noDataMessage": "Select a container to see recommended requests and limits",
+              "queryType": 0,
+              "resourceType": "{resourceType}",
+              "crossComponentResources": [
+                "{AKSCluster}"
+              ],
+              "gridSettings": {
+                "sortBy": [
+                  {
+                    "itemKey": "ControllerName",
+                    "sortOrder": 1
+                  }
+                ]
+              },
+              "sortBy": [
+                {
+                  "itemKey": "ControllerName",
+                  "sortOrder": 1
+                }
+              ]
+            },
+            "name": "smart detectors combined workbook - limits and requests show selected container details"
+          }
+        ]
+      },
+      "conditionalVisibility": {
+        "parameterName": "selectedTab",
+        "comparison": "isEqualTo",
+        "value": "containerOpt"
+      },
+      "name": "containerOptGroup",
+      "styleSettings": {
+        "margin": "1em"
+      }
     },
     {
       "type": 12,
@@ -1409,133 +2374,328 @@
           {
             "type": 1,
             "content": {
-              "json": "# Logs\r\n\r\nBy default when an application logs to **STDOUT** or **STDERR** the message will be captured by Azure Container Insights and ingested into Log Analytics. \r\n\r\n"
+              "json": "# Logs\r\n\r\nBy default when an application logs to **STDOUT** or **STDERR** the message will be captured by Azure Container Insights and ingested into Log Analytics. If an application is already instrumented with an Application Performance Monitoring (APM) tool (e.g. Application Insights) it's worth reviewing what is logged vs what's captured out of the box by the APM instrumentation. \r\n\r\n- [Control Costs](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-cost#controlling-ingestion-to-reduce-cost): To reduce or optimise the logging costs\r\n- [ContainerLogV2](https://learn.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-logging-v2): Context on the ContainerLogV2 Schema\r\n\r\n"
             },
             "name": "vdiOverview"
           },
           {
-            "type": 3,
+            "type": 9,
             "content": {
-              "version": "KqlItem/1.0",
-              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=innerunique\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName, LogEntry, TimeGenerated\r\n| summarize count() by ServiceName\r\n| order by count_",
-              "size": 0,
-              "title": "Log Count by Pod",
-              "timeContextFromParameter": "Timerange",
-              "exportFieldName": "ServiceName",
-              "exportParameterName": "ServiceName",
-              "exportDefaultValue": "empty",
-              "queryType": 0,
-              "resourceType": "microsoft.containerservice/managedclusters",
-              "crossComponentResources": [
-                "{AKSCluster}"
+              "version": "KqlParameterItem/1.0",
+              "parameters": [
+                {
+                  "id": "75c813b7-60a3-4660-96a4-08e51aadf765",
+                  "version": "KqlParameterItem/1.0",
+                  "name": "LogSchema",
+                  "label": "Container Log Schema",
+                  "type": 10,
+                  "isRequired": true,
+                  "query": "{\"version\":\"1.0.0\",\"content\":\"[\\r\\n    { \\\"value\\\":\\\"default\\\", \\\"label\\\":\\\"Default\\\", \\\"selected\\\":true },\\r\\n    { \\\"value\\\":\\\"v2\\\", \\\"label\\\":\\\"v2\\\" }\\r\\n]\",\"transformers\":null}",
+                  "typeSettings": {
+                    "additionalResourceOptions": [],
+                    "showDefault": false
+                  },
+                  "timeContext": {
+                    "durationMs": 86400000
+                  },
+                  "queryType": 8
+                }
               ],
-              "gridSettings": {
-                "formatters": [
-                  {
-                    "columnMatch": "count_",
-                    "formatter": 8,
-                    "formatOptions": {
-                      "palette": "greenRed",
-                      "compositeBarSettings": {
-                        "labelText": "",
-                        "columnSettings": []
-                      }
-                    },
-                    "numberFormat": {
-                      "unit": 17,
-                      "options": {
-                        "style": "decimal"
-                      }
-                    }
-                  }
-                ],
-                "filter": true
-              }
+              "style": "pills",
+              "queryType": 8
             },
-            "customWidth": "40",
-            "name": "query - 1 - Copy"
+            "name": "eventViewParams"
           },
           {
-            "type": 3,
+            "type": 12,
             "content": {
-              "version": "KqlItem/1.0",
-              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=innerunique\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, bin(TimeGenerated, 10m)",
-              "size": 0,
-              "title": "Log Count by Pod",
-              "timeContextFromParameter": "Timerange",
-              "queryType": 0,
-              "resourceType": "microsoft.containerservice/managedclusters",
-              "crossComponentResources": [
-                "{AKSCluster}"
-              ],
-              "visualization": "linechart",
-              "gridSettings": {
-                "formatters": [
-                  {
-                    "columnMatch": "count_",
-                    "formatter": 0,
-                    "numberFormat": {
-                      "unit": 17,
-                      "options": {
-                        "style": "decimal"
-                      }
-                    }
-                  }
-                ]
-              }
-            },
-            "customWidth": "60",
-            "name": "query - 1 - Copy"
-          },
-          {
-            "type": 1,
-            "content": {
-              "json": "# Pod Logs\r\n\r\nLogs should be structured and any multi-line log messages should appear in a single `LogEntry` row. \r\n\r\n- **ServiceName**: The name of the controller (e.g. deployment)\r\n- **Investigate Errors**: To Investigate issues use the `open in search` button in the top right corner of the Log Output Panel.\r\n\r\n> **Note:** Select a ServiceName in the `Log Count by Pod` panel above to filter the logs to just that service. ",
-              "style": "info"
-            },
-            "customWidth": "20",
-            "name": "text - 4"
-          },
-          {
-            "type": 3,
-            "content": {
-              "version": "KqlItem/1.0",
-              "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=innerunique\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, LogEntry, _ResourceId\r\n| order by count_",
-              "size": 0,
-              "showAnalytics": true,
-              "title": "Log Count by Pod Log Output",
-              "timeContextFromParameter": "Timerange",
-              "queryType": 0,
-              "resourceType": "microsoft.containerservice/managedclusters",
-              "crossComponentResources": [
-                "{AKSCluster}"
-              ],
-              "gridSettings": {
-                "formatters": [
-                  {
-                    "columnMatch": "LogEntry",
-                    "formatter": 0,
-                    "formatOptions": {
-                      "customColumnWidthSetting": "50%"
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=innerunique\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName, LogEntry, TimeGenerated\r\n| summarize count() by ServiceName\r\n| order by count_",
+                    "size": 0,
+                    "title": "Log Count by Pod",
+                    "timeContextFromParameter": "Timerange",
+                    "exportFieldName": "ServiceName",
+                    "exportParameterName": "ServiceName",
+                    "exportDefaultValue": "empty",
+                    "queryType": 0,
+                    "resourceType": "microsoft.containerservice/managedclusters",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "count_",
+                          "formatter": 8,
+                          "formatOptions": {
+                            "palette": "greenRed",
+                            "compositeBarSettings": {
+                              "labelText": "",
+                              "columnSettings": []
+                            }
+                          },
+                          "numberFormat": {
+                            "unit": 17,
+                            "options": {
+                              "style": "decimal"
+                            }
+                          }
+                        }
+                      ],
+                      "filter": true
                     }
                   },
-                  {
-                    "columnMatch": "count_",
-                    "formatter": 0,
-                    "numberFormat": {
-                      "unit": 17,
-                      "options": {
-                        "style": "decimal"
-                      }
+                  "customWidth": "40",
+                  "name": "query - 1 - Copy"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=innerunique\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, bin(TimeGenerated, 10m)",
+                    "size": 0,
+                    "title": "Log Count by Pod",
+                    "timeContextFromParameter": "Timerange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.containerservice/managedclusters",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "visualization": "linechart",
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "count_",
+                          "formatter": 0,
+                          "numberFormat": {
+                            "unit": 17,
+                            "options": {
+                              "style": "decimal"
+                            }
+                          }
+                        }
+                      ]
                     }
-                  }
-                ],
-                "rowLimit": 5000,
-                "filter": true
-              }
+                  },
+                  "customWidth": "60",
+                  "name": "query - 1 - Copy"
+                },
+                {
+                  "type": 1,
+                  "content": {
+                    "json": "# Pod Logs\r\n\r\nLogs should be structured and any multi-line log messages should appear in a single `LogEntry` row. \r\n\r\n- **ServiceName**: The name of the controller (e.g. deployment)\r\n- **Investigate Errors**: To Investigate issues use the `open in search` button in the top right corner of the Log Output Panel.\r\n\r\n> **Note:** Select a ServiceName in the `Log Count by Pod` panel above to filter the logs to just that service. ",
+                    "style": "info"
+                  },
+                  "customWidth": "20",
+                  "name": "text - 4"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "KubePodInventory \r\n|project ContainerID, Name, ServiceName, ControllerName\r\n| join kind=innerunique\r\n(ContainerLog\r\n| project LogEntry, TimeGenerated, _ResourceId, ContainerID) on ContainerID\r\n| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, LogEntry, TimeGenerated, _ResourceId\r\n| summarize count() by ServiceName, LogEntry, _ResourceId\r\n| order by count_",
+                    "size": 0,
+                    "showAnalytics": true,
+                    "title": "Log Count by Pod Log Output",
+                    "timeContextFromParameter": "Timerange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.containerservice/managedclusters",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "LogEntry",
+                          "formatter": 0,
+                          "formatOptions": {
+                            "customColumnWidthSetting": "50%"
+                          }
+                        },
+                        {
+                          "columnMatch": "count_",
+                          "formatter": 0,
+                          "numberFormat": {
+                            "unit": 17,
+                            "options": {
+                              "style": "decimal"
+                            }
+                          }
+                        }
+                      ],
+                      "rowLimit": 5000,
+                      "filter": true
+                    }
+                  },
+                  "customWidth": "80",
+                  "name": "query - 1 - Copy"
+                }
+              ]
             },
-            "customWidth": "80",
-            "name": "query - 1 - Copy"
+            "conditionalVisibility": {
+              "parameterName": "LogSchema",
+              "comparison": "isEqualTo",
+              "value": "default"
+            },
+            "name": "defaultLogSchema",
+            "styleSettings": {
+              "showBorder": true
+            }
+          },
+          {
+            "type": 12,
+            "content": {
+              "version": "NotebookGroup/1.0",
+              "groupType": "editable",
+              "items": [
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "KubePodInventory \r\n| where Namespace in ({Namespace}) or \"{Namespace}\" contains \"kube-system\"\r\n| project ContainerId = ContainerID, Name, ControllerName\r\n| join kind=innerunique\r\n(ContainerLogV2\r\n| project LogMessage, TimeGenerated, _ResourceId, ContainerId) on ContainerId\r\n//| extend ServiceName = iff(isempty(ServiceName), ControllerName, ServiceName)\r\n| project ServiceName = ControllerName , LogMessage, TimeGenerated\r\n| summarize count() by ServiceName\r\n| order by count_",
+                    "size": 0,
+                    "title": "Log Count by Pod",
+                    "timeContextFromParameter": "Timerange",
+                    "exportFieldName": "ServiceName",
+                    "exportParameterName": "ServiceName",
+                    "exportDefaultValue": "empty",
+                    "queryType": 0,
+                    "resourceType": "microsoft.containerservice/managedclusters",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "count_",
+                          "formatter": 8,
+                          "formatOptions": {
+                            "palette": "greenRed",
+                            "compositeBarSettings": {
+                              "labelText": "",
+                              "columnSettings": []
+                            }
+                          },
+                          "numberFormat": {
+                            "unit": 17,
+                            "options": {
+                              "style": "decimal"
+                            }
+                          }
+                        }
+                      ],
+                      "filter": true
+                    }
+                  },
+                  "customWidth": "40",
+                  "name": "query - 1 - Copy"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "KubePodInventory \r\n| where Namespace in ({Namespace}) or \"{Namespace}\" contains \"kube-system\"\r\n| project ContainerId = ContainerID, Name, ServiceName = ControllerName\r\n| join kind=innerunique\r\n(ContainerLogV2\r\n| project LogMessage, TimeGenerated, _ResourceId, ContainerId) on ContainerId\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName , LogMessage, TimeGenerated\r\n| summarize count() by ServiceName, bin(TimeGenerated, 10m)\r\n",
+                    "size": 0,
+                    "title": "Log Count by Pod",
+                    "timeContextFromParameter": "Timerange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.containerservice/managedclusters",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "visualization": "linechart",
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "count_",
+                          "formatter": 0,
+                          "numberFormat": {
+                            "unit": 17,
+                            "options": {
+                              "style": "decimal"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "customWidth": "60",
+                  "name": "query - 1 - Copy"
+                },
+                {
+                  "type": 1,
+                  "content": {
+                    "json": "# Pod LogV2\r\n\r\nLogs should be structured and any multi-line log messages should appear in a single `LogEntry` row. \r\n\r\n- **ServiceName**: The name of the controller (e.g. deployment)\r\n- **Investigate Errors**: To Investigate issues use the `open in search` button in the top right corner of the Log Output Panel.\r\n\r\n> **Note:** Select a ServiceName in the `Log Count by Pod` panel above to filter the logs to just that service. ",
+                    "style": "info"
+                  },
+                  "customWidth": "20",
+                  "name": "text - 4"
+                },
+                {
+                  "type": 3,
+                  "content": {
+                    "version": "KqlItem/1.0",
+                    "query": "KubePodInventory \r\n| where Namespace in ({Namespace}) or \"{Namespace}\" contains \"kube-system\"\r\n| project ContainerId = ContainerID, Name, ServiceName = ControllerName, Namespace\r\n| join kind=innerunique\r\n(ContainerLogV2\r\n| project LogMessage, TimeGenerated, _ResourceId, ContainerId) on ContainerId\r\n| where ServiceName in (\"{ServiceName}\") or \"{ServiceName}\" == \"empty\"\r\n| project ServiceName, tostring(LogMessage), TimeGenerated, _ResourceId, Namespace\r\n| summarize count() by ServiceName, LogMessage, Namespace\r\n| order by count_",
+                    "size": 0,
+                    "showAnalytics": true,
+                    "title": "Log Count by Pod Log Output",
+                    "timeContextFromParameter": "Timerange",
+                    "queryType": 0,
+                    "resourceType": "microsoft.containerservice/managedclusters",
+                    "crossComponentResources": [
+                      "{AKSCluster}"
+                    ],
+                    "gridSettings": {
+                      "formatters": [
+                        {
+                          "columnMatch": "LogMessage",
+                          "formatter": 0,
+                          "formatOptions": {
+                            "customColumnWidthSetting": "60%"
+                          }
+                        },
+                        {
+                          "columnMatch": "count_",
+                          "formatter": 0,
+                          "numberFormat": {
+                            "unit": 17,
+                            "options": {
+                              "style": "decimal"
+                            }
+                          }
+                        },
+                        {
+                          "columnMatch": "LogEntry",
+                          "formatter": 0,
+                          "formatOptions": {
+                            "customColumnWidthSetting": "50%"
+                          }
+                        }
+                      ],
+                      "rowLimit": 5000,
+                      "filter": true
+                    }
+                  },
+                  "customWidth": "80",
+                  "name": "query - 1 - Copy"
+                }
+              ]
+            },
+            "conditionalVisibility": {
+              "parameterName": "LogSchema",
+              "comparison": "isEqualTo",
+              "value": "v2"
+            },
+            "name": "v2LogSchemaGroup",
+            "styleSettings": {
+              "showBorder": true
+            }
           }
         ]
       },
@@ -1574,7 +2734,7 @@
               ],
               "timeContextFromParameter": "Timerange",
               "timeContext": {
-                "durationMs": 0
+                "durationMs": 86400000
               },
               "metrics": [
                 {
@@ -1720,7 +2880,7 @@
           {
             "type": 1,
             "content": {
-              "json": "## Cluster Autoscaling\r\n\r\nIf your cluster has autoscaling enabled it will scale out the Nodes dynamically. \r\n\r\n> This panel only works if the Cluster Autoscaler diagnostic logging is enabled. \r\n\r\n- **unschedulable**: This is referring to Pods who can't start due to resource constraints (a trigger to scale)\r\n- **No expansion options**: The NodePool can't scale anymore (max scale size).\r\n- **Requested scale-up **: Autoscaling triggered (request sent to VMSS)\r\n",
+              "json": "## Cluster Autoscaling\r\n\r\nIf your cluster has autoscaling enabled it will scale out the Nodes dynamically. This panel displays scale-up logs from the Cluster Autoscaler. \r\n\r\n> This panel only works if the Cluster Autoscaler diagnostic logging is enabled. \r\n\r\n\r\n",
               "style": "info"
             },
             "customWidth": "20",
@@ -1730,7 +2890,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "AzureDiagnostics\r\n| where Category == \"cluster-autoscaler\"\r\n| extend trimmed_log = trim_start(@\"^.*?\\]\\s+\", log_s)\r\n| where trimmed_log has \"is unschedulable\" or trimmed_log has \"No expansion options\"  or trimmed_log has \"unneeded\" or trimmed_log has \"removal\" or trimmed_log has \"unregistered nodes present\" or trimmed_log has \"Unschedulable pods are very new, waiting one iteration for more\" or trimmed_log has \"Best option to resize\" or trimmed_log has \"Estimated\" or trimmed_log has \"Requested scale-up\" or trimmed_log has \"increase scale set\" \r\n| project TimeGenerated, trimmed_log\r\n\r\n",
+              "query": "AzureDiagnostics\r\n| where Category == \"cluster-autoscaler\"\r\n| extend trimmed_log = trim_start(@\"^.*?\\]\\s+\", log_s)\r\n| where trimmed_log !has \"FLAG\"\r\n| where trimmed_log has \"scale-up\" or trimmed_log has \"Unschedulable pods are very new, waiting one iteration for more\"  or trimmed_log has \"increase scale set\" \r\n| project TimeGenerated, trimmed_log\r\n\r\n",
               "size": 0,
               "title": "Cluster Autoscaling",
               "noDataMessage": "Ensure the correct Log Analytics Workspace is selected. If empty, there's no scaling events. ",

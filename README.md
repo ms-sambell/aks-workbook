@@ -16,7 +16,21 @@ This repository contains an Azure Workbook which can be used to monitor Azure Ku
 
 ### Logs
 
+> *Note:* Supports ContainerLogs and ContainerLogsV2
+
 ![logs](.images/logs.png)
+
+## Container Optimizer
+
+![optimizer](.images/container-opt.png)
+
+## Workbook Parameters
+
+![params](.images/menu.png)
+
+## AKS Config View
+
+![config](.images/cluster-config.png)
 
 ## How To
 

@@ -12,6 +12,9 @@
       "type": 9,
       "content": {
         "version": "KqlParameterItem/1.0",
+        "crossComponentResources": [
+          "{Subscriptions}"
+        ],
         "parameters": [
           {
             "id": "ee72d127-d97a-43a7-aece-1426d6affd22",
@@ -179,7 +182,7 @@
           }
         ],
         "style": "pills",
-        "queryType": 8
+        "queryType": 1
       },
       "name": "parameters - 7"
     },
@@ -406,7 +409,7 @@
             "type": 3,
             "content": {
               "version": "KqlItem/1.0",
-              "query": "\tresources\r\n\t| where type == \"microsoft.containerservice/managedclusters\"\r\n\t| extend  AKSname=name,location=location,AKSRG=tolower(resourceGroup),Sku=tostring(sku.name),Tier=tostring(sku.tier),AgentPoolProfiles=properties.agentPoolProfiles\r\n    | extend nodePoolCount = array_length(AgentPoolProfiles)\r\n\t| mvexpand AgentPoolProfiles\r\n\t| extend ProfileName = tostring(AgentPoolProfiles.name) ,mode=AgentPoolProfiles.mode,AutoScaleEnabled = AgentPoolProfiles.enableAutoScaling ,SpotVM=AgentPoolProfiles.scaleSetPriority,  VMSize=tostring(AgentPoolProfiles.vmSize),minCount=tostring(AgentPoolProfiles.minCount),maxCount=tostring(AgentPoolProfiles.maxCount) , nodeCount=tostring(AgentPoolProfiles.['count']), maxPods=tostring(AgentPoolProfiles.maxPods)\r\n    | project id,ProfileName,Sku,Tier,mode,AutoScaleEnabled,SpotVM, VMSize,nodeCount,minCount,maxCount, AKSname, maxPods, nodePoolCount\r\n    | extend SpotVM = iff(mode == \"System\", \"NotApplicable\", SpotVM)\r\n    | extend SystemNodeSize = iff(VMSize matches regex \"([2-4])\", \"Rightsized\", \"Oversized\")\r\n    | extend SystemPoolSizing = iff((mode == \"System\" and nodePoolCount > 1 ), SystemNodeSize, \"\")\r\n    | project id,ProfileName,Sku,Tier,mode,SystemPoolSizing, AutoScaleEnabled,SpotVM, VMSize, nodeCount,minCount,maxCount, AKSname, maxPods\r\n\r\n",
+              "query": "\tresources\r\n\t| where type == \"microsoft.containerservice/managedclusters\"\r\n\t| extend  AKSname=name,location=location,AKSRG=tolower(resourceGroup),Sku=tostring(sku.name),Tier=tostring(sku.tier),AgentPoolProfiles=properties.agentPoolProfiles\r\n    | where name in (\"{AKSCluster:name}\")\r\n | extend nodePoolCount = array_length(AgentPoolProfiles)\r\n\t| mvexpand AgentPoolProfiles\r\n\t| extend ProfileName = tostring(AgentPoolProfiles.name) ,mode=AgentPoolProfiles.mode,AutoScaleEnabled = AgentPoolProfiles.enableAutoScaling ,SpotVM=AgentPoolProfiles.scaleSetPriority,  VMSize=tostring(AgentPoolProfiles.vmSize),minCount=tostring(AgentPoolProfiles.minCount),maxCount=tostring(AgentPoolProfiles.maxCount) , nodeCount=tostring(AgentPoolProfiles.['count']), maxPods=tostring(AgentPoolProfiles.maxPods)\r\n    | project id,ProfileName,Sku,Tier,mode,AutoScaleEnabled,SpotVM, VMSize,nodeCount,minCount,maxCount, AKSname, maxPods, nodePoolCount\r\n    | extend SpotVM = iff(mode == \"System\", \"NotApplicable\", SpotVM)\r\n    | extend SystemNodeSize = iff(VMSize matches regex \"([2-4])\", \"Rightsized\", \"Oversized\")\r\n    | extend SystemPoolSizing = iff((mode == \"System\" and nodePoolCount > 1 ), SystemNodeSize, \"\")\r\n    | project id,ProfileName,Sku,Tier,mode,SystemPoolSizing, AutoScaleEnabled,SpotVM, VMSize, nodeCount,minCount,maxCount, AKSname, maxPods\r\n\r\n\r\n\r\n",
               "size": 3,
               "title": "AKS Cluster Audit",
               "noDataMessage": "No information returned. Ensure the AKS cluster selected exists. ",
